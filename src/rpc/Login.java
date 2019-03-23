@@ -43,8 +43,8 @@ public class Login extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			JSONObject obj = new JSONObject();
 			if (session!=null) {
-				String userId=session.getAttribute("username").toString();
-				obj.put("status", "OK").put("username", userId);
+				String username=session.getAttribute("username").toString();
+				obj.put("status", "OK").put("username", username);
 			} else {
 				response.setStatus(403);
 				obj.put("status","Invalid Session");

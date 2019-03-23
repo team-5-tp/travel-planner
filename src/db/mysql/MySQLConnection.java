@@ -95,7 +95,7 @@ public class MySQLConnection implements DBConnection {
 			return false;
 		}
 		try {
-			String sql="select * from users where username = ? and password= ? ";
+			String sql="select * from user where username = ? and password= ? ";
 			PreparedStatement statement=conn.prepareStatement(sql);
 			statement.setString(1, username);
 			statement.setString(2, password);
