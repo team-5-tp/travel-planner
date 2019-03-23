@@ -43,8 +43,8 @@ public class Login extends HttpServlet {
 			HttpSession session = request.getSession(false);
 			JSONObject obj = new JSONObject();
 			if (session!=null) {
-				String userId=session.getAttribute("user_id").toString();
-				obj.put("status", "OK").put("user_id", userId).put("name", connection.getFullname(userId));
+				String userId=session.getAttribute("username").toString();
+				obj.put("status", "OK").put("username", userId);
 			} else {
 				response.setStatus(403);
 				obj.put("status","Invalid Session");
@@ -66,14 +66,14 @@ public class Login extends HttpServlet {
 		DBConnection connection = DBConnectionFactory.getConnection();
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
-			String userId = input.getString("user_id");
+			String username = input.getString("username");
 			String password = input.getString("password");
 			JSONObject obj = new JSONObject();
-			if (connection.verifyLogin(userId, password)) {
+			if (connection.userVerify(username, password)) {
 				HttpSession session = request.getSession();
-				session.setAttribute("user_id", userId);
+				session.setAttribute("username", username);
 				session.setMaxInactiveInterval(600);
-				obj.put("status", "OK").put("user_id", userId).put("name", connection.getFullname(userId));
+				obj.put("status", "OK").put("username", username);
 			} else {
 				response.setStatus(401);
 				obj.put("status", "User Doesn't Exists");
