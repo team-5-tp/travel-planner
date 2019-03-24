@@ -39,8 +39,8 @@ public class MySQLTableCreation {
 					+ "planname NVARCHAR(255) NOT NULL,"
 					+ "username NVARCHAR(255) NOT NULL,"
 					+ "PRIMARY KEY (user_id, plan_id),"
-					+ "UNIQUE KEY (planname)"
-					+ "FOREIGN KEY (user_id) REFERENCES users(user_id)"
+					+ "UNIQUE KEY (plan_id),"
+					+ "FOREIGN KEY (user_id) REFERENCES user(user_id)"
 					+ ")";
 			// TODO(MZ): adding POI info after POI has been created
 			statement.execute(sql);
