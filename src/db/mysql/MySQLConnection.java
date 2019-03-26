@@ -41,7 +41,7 @@ public class MySQLConnection implements DBConnection {
 			return false;
 		}
 		try {
-			String sql = "INSERT IGNORE INTO user VALUES (?, ?)";
+			String sql = "INSERT  INTO  user (username,password)  VALUES (?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, username);
 			ps.setString(2, password);
