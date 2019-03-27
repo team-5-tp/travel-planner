@@ -11,6 +11,7 @@ import java.util.Set;
 
 import db.DBConnection;
 import entity.Plan;
+import entity.Plan.PlanBuilder;
 
 public class MySQLConnection implements DBConnection {
 	private Connection conn;
@@ -130,6 +131,35 @@ public class MySQLConnection implements DBConnection {
 			e.printStackTrace();
 		}
 		return false;
+	}
+	
+	@Override
+	public Plan getPlan(int userId, int planId) {
+		Plan plan = null;
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return plan;
+		}
+		
+		try {
+			String sql = "SELECT * FROM plan WHERE user_id = ? and plan_id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, userId);
+			statement.setInt(2, planId);
+			
+			ResultSet resultSet = statement.executeQuery();
+			PlanBuilder planBuilder = new PlanBuilder();
+			while (resultSet.next()) {
+				planBuilder.setUserId(resultSet.getInt("user_id"));
+				planBuilder.setPlanId(resultSet.getInt("plan_id"));
+				planBuilder.setUserName(resultSet.getString("username"));
+				planBuilder.setPlanName(resultSet.getString("planname"));
+			}
+			plan = planBuilder.build();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return plan;
 	}
 
 	@Override
