@@ -120,12 +120,12 @@ public class MySQLConnection implements DBConnection {
 		}
 		
 		try {
-			String sql = "INSERT IGNORE INTO plan VALUES(?, ?, ?, ?)";
+			String sql = "INSERT IGNORE INTO plan VALUES(?, ?, ?)";
 			PreparedStatement statement = conn.prepareStatement(sql);
-			statement.setInt(1, plan.getUserId());
-			statement.setInt(2, plan.getPlanId());
-			statement.setString(3, plan.getPlanName());
-			statement.setString(4, plan.getUserName());
+			statement.setInt(1, plan.getPlanId());
+			statement.setString(2, plan.getPlanName());
+			statement.setInt(3, plan.getUserId());
+//			statement.setString(4, plan.getUserName());
 			return statement.executeUpdate() == 1;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -150,10 +150,10 @@ public class MySQLConnection implements DBConnection {
 			ResultSet resultSet = statement.executeQuery();
 			PlanBuilder planBuilder = new PlanBuilder();
 			while (resultSet.next()) {
-				planBuilder.setUserId(resultSet.getInt("user_id"));
 				planBuilder.setPlanId(resultSet.getInt("plan_id"));
-				planBuilder.setUserName(resultSet.getString("username"));
 				planBuilder.setPlanName(resultSet.getString("planname"));
+				planBuilder.setUserId(resultSet.getInt("user_id"));
+//				planBuilder.setUserName(resultSet.getString("username"));
 			}
 			plan = planBuilder.build();
 		} catch (Exception e) {

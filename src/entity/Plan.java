@@ -16,8 +16,6 @@ public class Plan {
     private String planName;
     private int userId;
     private String userName;
-    // TODO(MZ): need to update after POI has been created
-//    private List<POI> pointsOfInterest;
     
     // This may not look necessary, but in case of future evolution, 
     // use a builder pattern for instantiation for now
@@ -26,7 +24,6 @@ public class Plan {
         this.planName = builder.planName;
         this.userId = builder.userId;
         this.userName = builder.userName;
-//        this.pointsOfInterest = builder.pointsOfInterest;
     }
 
     public int getPlanId() {
@@ -44,21 +41,25 @@ public class Plan {
     public String getUserName() {
         return userName;
     }
-
-//    public List<POI> getPointsOfInterest() {
-//        return pointsOfInterest;
-//    }
     
     /**
      * Convert the plan to a JSON object such that the app can understand
+     * 
+     * @return a JSON object containing the plan info in the format
+     *         {
+     *           plan_id: 
+     *           planname:
+     *           user_id:
+     *           username:
+     *         }
      */
  	public JSONObject toJSONObject() {
  		JSONObject obj = new JSONObject();
  		try {
- 			obj.put("user_id", userId);
  			obj.put("plan_id", planId);
- 			obj.put("username", userName);
  			obj.put("planname", planName);
+ 			obj.put("user_id", userId);
+ 			obj.put("username", userName);
  		} catch (JSONException e) {
  			e.printStackTrace();
  		}
@@ -88,10 +89,6 @@ public class Plan {
             this.userName = userName;
         }
 
-//        public void setPointsOfInterest(List<POI> pointsOfInterest) {
-//            this.pointsOfInterest = pointsOfInterest;
-//        }
-        
         public Plan build() {
             return new Plan(this);
         }

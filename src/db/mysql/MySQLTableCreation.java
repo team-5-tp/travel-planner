@@ -18,7 +18,9 @@ public class MySQLTableCreation {
 			}
 			// Step 2 Drop tables in case they exist.
 			Statement statement = conn.createStatement();
-			String sql = "DROP TABLE IF EXISTS user";
+			String sql = "DROP TABLE IF EXISTS plan";
+			statement.executeUpdate(sql);
+			sql = "DROP TABLE IF EXISTS user";
 			statement.executeUpdate(sql);
 
 			// Step 3 Create new tables
@@ -34,15 +36,13 @@ public class MySQLTableCreation {
 			
 			// 2. plan
 			sql = "CREATE TABLE plan ("
-					+ "user_id INT,"
 					+ "plan_id INT AUTO_INCREMENT,"
 					+ "planname NVARCHAR(255) NOT NULL,"
-					+ "username NVARCHAR(255) NOT NULL,"
-					+ "PRIMARY KEY (user_id, plan_id),"
-					+ "UNIQUE KEY (plan_id),"
+					+ "user_id INT,"
+//					+ "username NVARCHAR(255) NOT NULL,"
+					+ "PRIMARY KEY (plan_id),"
 					+ "FOREIGN KEY (user_id) REFERENCES user(user_id)"
 					+ ")";
-			// TODO(MZ): adding POI info after POI has been created
 			statement.execute(sql);
 
 			// Step 4: insert fake user 1111/3229c1097c00d497a0fd282d586be050
@@ -51,10 +51,9 @@ public class MySQLTableCreation {
 			statement.executeUpdate(sql);
 			
 			// 2. plan
-			// TODO(MZ): need to figure out inserting user_id with Ke Zhou
 			// Insert a fake plan
-			// sql = "INSERT IGNORE INTO plan VALUES"
-			// statement.executeUpdate(sql); 
+			sql = "INSERT IGNORE INTO plan VALUES(NULL, 'LA', 1)";
+			statement.executeUpdate(sql); 
 
 			conn.close();
 			System.out.println("Import done successfully");
