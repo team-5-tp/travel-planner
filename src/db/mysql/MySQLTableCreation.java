@@ -23,10 +23,10 @@ public class MySQLTableCreation {
 
 			// Step 3 Create new tables
 			sql = "CREATE TABLE user ("
-					+ "user_id INT AUTO_INCREMENT,"
+					+ "id INT AUTO_INCREMENT,"
 					+ "username NVARCHAR(255) NOT NULL,"
 					+ "password NVARCHAR(255) NOT NULL,"
-					+ "PRIMARY KEY (user_id),"
+					+ "PRIMARY KEY (id),"
 					+ "UNIQUE KEY (username)"
 					+ ")";
 			statement.executeUpdate(sql);

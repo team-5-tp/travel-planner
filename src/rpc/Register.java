@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
-
-import db.DBConnection;
-import db.DBConnectionFactory;
+import db.UserDBConnectionFactory;
+import db.UserDBConnection;
+import entity.User;
 
 /**
  * Servlet implementation class Register
@@ -40,19 +40,18 @@ public class Register extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DBConnection connection = DBConnectionFactory.getConnection();
+		UserDBConnection connection = UserDBConnectionFactory.getConnection();
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
-			String username = input.getString("username");
-			String password = input.getString("password");
-			JSONObject obj = new JSONObject();
-			if (connection.userInsert(username, password)) {
-				obj.put("status", "OK");
+			JSONObject output =new JSONObject();
+			User user=User.fromJSONObject(input);
+			if (connection.create(user)) {                                                                        
+				output.put("status", "OK").put("user_id", user.getId());
 			} else {
 				response.setStatus(401);
-				obj.put("status", "Registration failed");
+				output.put("status", "Registration failed");
 			}
-			RpcHelper.writeJsonObject(response, obj);
+			RpcHelper.writeJsonObject(response, output);
 
 		} catch (Exception e) {
 			e.printStackTrace();
