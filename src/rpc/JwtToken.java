@@ -1,10 +1,7 @@
 package rpc;
 
-import java.sql.Connection;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.swing.text.StyleConstants.CharacterConstants;
 
 import com.auth0.jwt.*;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -16,13 +13,11 @@ import entity.User;
 
 public class JwtToken {
 	private static final String KEY="team5-tp";
-	private static final String ISSUER="team5";
 	public static String createToken(User user) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("alg", "HS256");
 		map.put("typ", "JWT");
 		String token = JWT.create()
-				.withIssuer(ISSUER)
 				.withHeader(map)// header
 				.withClaim("user_id", user.getId())// payload
 				.sign(Algorithm.HMAC256(KEY));// º”√‹
