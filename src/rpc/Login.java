@@ -50,7 +50,7 @@ public class Login extends HttpServlet {
 				response.setStatus(401);
 				obj.put("status", "User Doesn't Exists");
 			}
-			RpcHelper.writeJsonObject(response, obj);
+			RpcHelper.writeJSONObject(response, obj);
 
 		} catch (Exception e) {
 			e.printStackTrace();

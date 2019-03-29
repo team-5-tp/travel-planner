@@ -43,7 +43,7 @@ public class Register extends HttpServlet {
 				response.setStatus(401);
 				output.put("status", "Registration failed");
 			}
-			RpcHelper.writeJsonObject(response, output);
+			RpcHelper.writeJSONObject(response, output);
 
 		} catch (Exception e) {
 			e.printStackTrace();
