@@ -38,7 +38,7 @@ public class Register extends HttpServlet {
 			JSONObject output =new JSONObject();
 			User user=User.fromJSONObject(input);
 			if (connection.create(user)) {                                                                        
-				output.put("status", "OK").put("user_id", user.getId());
+				output.put("status", "OK").put("token", JwtToken.createToken(user));
 			} else {
 				response.setStatus(401);
 				output.put("status", "Registration failed");
