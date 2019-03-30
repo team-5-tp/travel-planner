@@ -1,11 +1,15 @@
 package rpc;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import db.PlanDBConnection;
@@ -37,13 +41,23 @@ public class UserPlan extends HttpServlet {
         // Get the database reference
         PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
         try {
-            // Get the parameters required for fetching a plan --> user_id and plan_id
-//            int userId = Integer.parseInt(request.getParameter("user_id"));
+        	// Test with getPlan() by plan_id
+        	/*
             int planId = Integer.parseInt(request.getParameter("plan_id"));
             Plan plan = null;
             plan = connection.getPlan(planId);
             JSONObject object = plan.toJSONObject();
             RpcHelper.writeJSONObject(response, object);
+            */
+        	// Get all the saved plans of the user
+        	int userId = Integer.parseInt(request.getParameter("user_id"));
+        	JSONArray array = new JSONArray();
+        	// Convert all saved plans into JSON object and put them all into the JSON array
+        	List<Plan> allPlans = connection.getAllPlans(userId);
+        	for (Plan plan : allPlans) {
+        		array.put(plan.toJSONObject());
+        	}
+        	RpcHelper.writeJsonArray(response, array);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -65,7 +79,6 @@ public class UserPlan extends HttpServlet {
         try {
             JSONObject requestBody = RpcHelper.readJSONObject(request);
             PlanBuilder builder = new PlanBuilder();
-            builder.setPlanId(requestBody.getInt("plan_id"));
             builder.setPlanName(requestBody.getString("planname"));
             builder.setUserId(requestBody.getInt("user_id"));
             // Insert the plan entry into the table
