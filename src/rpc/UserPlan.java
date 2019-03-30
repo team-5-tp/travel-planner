@@ -38,10 +38,10 @@ public class UserPlan extends HttpServlet {
         PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
         try {
             // Get the parameters required for fetching a plan --> user_id and plan_id
-            int userId = Integer.parseInt(request.getParameter("user_id"));
+//            int userId = Integer.parseInt(request.getParameter("user_id"));
             int planId = Integer.parseInt(request.getParameter("plan_id"));
             Plan plan = null;
-            plan = connection.getPlan(userId, planId);
+            plan = connection.getPlan(planId);
             JSONObject object = plan.toJSONObject();
             RpcHelper.writeJSONObject(response, object);
         } catch (Exception e) {
@@ -93,13 +93,13 @@ public class UserPlan extends HttpServlet {
         // Send a request to delete a plan
         try {
             JSONObject requestBody = RpcHelper.readJSONObject(request);
-            PlanBuilder builder = new PlanBuilder();
-            builder.setPlanId(requestBody.getInt("plan_id"));
-            builder.setPlanName(requestBody.getString("planname"));
-            builder.setUserId(requestBody.getInt("user_id"));
+//            PlanBuilder builder = new PlanBuilder();
+//            builder.setPlanId(requestBody.getInt("plan_id"));
+//            builder.setPlanName(requestBody.getString("planname"));
+//            builder.setUserId(requestBody.getInt("user_id"));
             // Insert the plan entry into the table
             JSONObject result = new JSONObject();
-            if (connection.deletePlan(builder.build())) {
+            if (connection.deletePlan(requestBody.getInt("plan_id"))) {
                 result.put("result", "SUCCESS");
             } else {
                 result.put("result", "FAILED");

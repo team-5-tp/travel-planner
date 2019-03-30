@@ -2,6 +2,9 @@ package db.mysql;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import db.PlanDBConnection;
 import entity.Plan;
@@ -18,7 +21,7 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
         
         try {
             String sql = "INSERT IGNORE INTO plan VALUES(?, ?, ?)";
-            PreparedStatement statement = conn.prepareStatement(sql);
+            PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             statement.setInt(1, plan.getPlanId());
             statement.setString(2, plan.getPlanName());
             statement.setInt(3, plan.getUserId());
@@ -30,7 +33,7 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
     }
 
     @Override
-    public Plan getPlan(int userId, int planId) {
+    public Plan getPlan(int planId) {
         Plan plan = null;
         if (conn == null) {
             System.err.println("DB connection failed");
@@ -38,10 +41,9 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
         }
         
         try {
-            String sql = "SELECT * FROM plan WHERE user_id = ? and plan_id = ?";
+            String sql = "SELECT * FROM plan WHERE plan_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, userId);
-            statement.setInt(2, planId);
+            statement.setInt(1, planId);
             
             ResultSet resultSet = statement.executeQuery();
             PlanBuilder planBuilder = new PlanBuilder();
@@ -56,19 +58,42 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
         }
         return plan;
     }
+    
+    @Override
+    public List<Plan> getAllPlans(int userId) {
+    	List<Plan> allPlans = new ArrayList<>();
+    	if (conn == null) {
+            System.err.println("DB connection failed");
+            return allPlans;
+        }
+    	
+    	try {
+    		String sql = "SELECT * FROM plan WHERE user_id = ?";
+        	PreparedStatement statement = conn.prepareStatement(sql);
+        	statement.setInt(1, userId);
+        	
+        	ResultSet resultSet = statement.executeQuery();
+        	while (resultSet.next()) {
+        		PlanBuilder planBuilder = new PlanBuilder();
+        	}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
+    	
+    	return allPlans;
+    }
 
     @Override
-    public boolean deletePlan(Plan plan) {
+    public boolean deletePlan(int planId) {
         if (conn == null) {
             System.err.println("DB connection failed");
             return false;
         }
         
         try {
-            String sql = "DELETE FROM plan WHERE user_id = ? and plan_id = ?";
+            String sql = "DELETE FROM plan WHERE plan_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setInt(1, plan.getUserId());
-            statement.setInt(2, plan.getPlanId());
+            statement.setInt(1, planId);
             return statement.executeUpdate() == 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,7 +108,7 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
             return false;
         }
         // Delete the old plan from the table and add the new plan
-        deletePlan(oldPlan);
+        deletePlan(oldPlan.getPlanId());
         return insertPlan(newPlan);
     }
 }

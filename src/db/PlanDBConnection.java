@@ -1,5 +1,7 @@
 package db;
 
+import java.util.List;
+
 import entity.Plan;
 
 public interface PlanDBConnection extends DBConnection {
@@ -12,20 +14,26 @@ public interface PlanDBConnection extends DBConnection {
     public boolean insertPlan(Plan plan);
     
     /**
-     * Get a plan of a user given user_id and plan_id
+     * Get a specific plan of a user given plan_id
      * 
-     * @param userId the user_id of the given user
      * @param planId the plan_id of the querying user plan
      */
-    public Plan getPlan(int userId, int planId);
+    public Plan getPlan(int planId);
+    
+    /**
+     * Get all saved plans of the given user
+     * 
+     * @param userId the user_id of the given user
+     */
+    public List<Plan> getAllPlans(int userId);
     
     /**
      * Delete a specific plan from the table
      * 
-     * @param plan the plan to be deleted
+     * @param plan the ID of the plan to be deleted
      * @return     whether the plan has been deleted or not
      */
-    public boolean deletePlan(Plan plan);
+    public boolean deletePlan(int planId);
     
     /**
      * Update an existing plan with a new plan
