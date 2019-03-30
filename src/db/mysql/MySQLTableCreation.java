@@ -35,10 +35,10 @@ public class MySQLTableCreation {
             
             // 2. plan
             sql = "CREATE TABLE plan ("
-                    + "plan_id INT AUTO_INCREMENT,"
+                    + "id INT AUTO_INCREMENT,"
                     + "planname NVARCHAR(255) NOT NULL,"
                     + "user_id INT,"
-                    + "PRIMARY KEY (plan_id),"
+                    + "PRIMARY KEY (id),"
                     + "FOREIGN KEY (user_id) REFERENCES user(user_id)"
                     + ")";
             statement.execute(sql);

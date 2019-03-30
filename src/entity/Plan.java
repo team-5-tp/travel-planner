@@ -35,7 +35,7 @@ public class Plan {
     }
     
     public int getUserId() {
-    	return userId;
+        return userId;
     }
 
     public String getUserName() {
@@ -53,18 +53,18 @@ public class Plan {
      *           username:
      *         }
      */
- 	public JSONObject toJSONObject() {
- 		JSONObject obj = new JSONObject();
- 		try {
- 			obj.put("plan_id", planId);
- 			obj.put("planname", planName);
- 			obj.put("user_id", userId);
- 			obj.put("username", userName);
- 		} catch (JSONException e) {
- 			e.printStackTrace();
- 		}
- 		return obj;
- 	}
+    public JSONObject toJSONObject() {
+        JSONObject obj = new JSONObject();
+        try {
+            obj.put("plan_id", planId);
+            obj.put("planname", planName);
+            obj.put("user_id", userId);
+            obj.put("username", userName);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return obj;
+    }
     
     public static class PlanBuilder {
         private int planId;
@@ -82,7 +82,7 @@ public class Plan {
         }
         
         public void setUserId(int userId) {
-        	this.userId = userId;
+            this.userId = userId;
         }
 
         public void setUserName(String userName) {

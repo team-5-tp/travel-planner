@@ -31,7 +31,7 @@ public class UserPlan extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      *
-     * GET method is used to fetch a user's plan
+     * GET method is used to fetch a specific plan
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Get the database reference
@@ -54,7 +54,7 @@ public class UserPlan extends HttpServlet {
     /**
      * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
      *
-     * POST method is used to save a user's plan
+     * POST method is used to save a plan
      * 
      * @param request   the HTTP request that contains the plan info to be saved
      * @param response  the HTTP response generated after saving the plan

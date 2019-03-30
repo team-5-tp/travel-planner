@@ -61,26 +61,29 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
     
     @Override
     public List<Plan> getAllPlans(int userId) {
-    	List<Plan> allPlans = new ArrayList<>();
-    	if (conn == null) {
+        List<Plan> allPlans = new ArrayList<>();
+        if (conn == null) {
             System.err.println("DB connection failed");
             return allPlans;
         }
-    	
-    	try {
-    		String sql = "SELECT * FROM plan WHERE user_id = ?";
-        	PreparedStatement statement = conn.prepareStatement(sql);
-        	statement.setInt(1, userId);
-        	
-        	ResultSet resultSet = statement.executeQuery();
-        	while (resultSet.next()) {
-        		PlanBuilder planBuilder = new PlanBuilder();
-        	}
-    	} catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    	
-    	return allPlans;
+        
+        try {
+            String sql = "SELECT * FROM plan WHERE user_id = ?";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setInt(1, userId);
+            
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                PlanBuilder planBuilder = new PlanBuilder();
+                planBuilder.setPlanId(resultSet.getInt("id"));
+                planBuilder.setPlanName(resultSet.getString("planname"));
+                planBuilder.setUserId(resultSet.getInt("user_id"));
+                allPlans.add(planBuilder.build());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return allPlans;
     }
 
     @Override
