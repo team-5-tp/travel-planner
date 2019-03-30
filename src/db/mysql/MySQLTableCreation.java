@@ -1,7 +1,7 @@
 package db.mysql;
 
 import java.sql.DriverManager;
-import java.sql.SQLException;
+
 import java.sql.Statement;
 import java.sql.Connection;
 
@@ -30,11 +30,34 @@ public class MySQLTableCreation {
 					+ "UNIQUE KEY (username)"
 					+ ")";
 			statement.executeUpdate(sql);
+			
+			
+	
+			
+			// create point of interest table
+			sql = "DROP TABLE IF EXISTS poi";
+			statement.executeUpdate(sql);
+
+			sql = "CREATE TABLE poi ("
+					+ "poi_id INT AUTO_INCREMENT,"
+					+ "poi_name NVARCHAR(255) NOT NULL,"
+					+ "visiting_order INT"
+					+ "plan_id INT,"
+					+ "venue_id NVARCHAR(255) NOT NULL,"
+					+ "PRIMARY KEY (poi_id)"
+					+ "user_id INT"
+					+ ")";
+			statement.executeUpdate(sql);
 
 
 			// Step 4: insert fake user 1111/3229c1097c00d497a0fd282d586be050
 			sql = "INSERT IGNORE INTO user VALUES(NULL,'1111', '2222')";
 			statement.executeUpdate(sql);
+			// insert a fake poi
+			
+			sql = "INSERT IGNORE INTO poi VALUES(NULL, 'LA', 1, 2, NULL)";
+			statement.executeUpdate(sql); 
+
 
 			conn.close();
 			System.out.println("Import done successfully");
