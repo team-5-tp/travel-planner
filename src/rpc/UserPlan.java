@@ -41,23 +41,23 @@ public class UserPlan extends HttpServlet {
         // Get the database reference
         PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
         try {
-        	// Test with getPlan() by plan_id
-        	/*
+            // Test with getPlan() by plan_id
+            /*
             int planId = Integer.parseInt(request.getParameter("plan_id"));
             Plan plan = null;
             plan = connection.getPlan(planId);
             JSONObject object = plan.toJSONObject();
             RpcHelper.writeJSONObject(response, object);
             */
-        	// Get all the saved plans of the user
-        	int userId = Integer.parseInt(request.getParameter("user_id"));
-        	JSONArray array = new JSONArray();
-        	// Convert all saved plans into JSON object and put them all into the JSON array
-        	List<Plan> allPlans = connection.getAllPlans(userId);
-        	for (Plan plan : allPlans) {
-        		array.put(plan.toJSONObject());
-        	}
-        	RpcHelper.writeJsonArray(response, array);
+            // Get all the saved plans of the user
+            int userId = Integer.parseInt(request.getParameter("user_id"));
+            JSONArray array = new JSONArray();
+            // Convert all saved plans into JSON object and put them all into the JSON array
+            List<Plan> allPlans = connection.getAllPlans(userId);
+            for (Plan plan : allPlans) {
+                array.put(plan.toJSONObject());
+            }
+            RpcHelper.writeJsonArray(response, array);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -84,9 +84,9 @@ public class UserPlan extends HttpServlet {
             // Insert the plan entry into the table
             JSONObject result = new JSONObject();
             if (connection.insertPlan(builder.build())) {
-                result.put("result", "SUCCESS");
+                result.put("insert", "SUCCESS");
             } else {
-                result.put("result", "FAILED");
+                result.put("insert", "FAILED");
             }
             RpcHelper.writeJSONObject(response, result);
         } catch (Exception e) {
@@ -106,16 +106,40 @@ public class UserPlan extends HttpServlet {
         // Send a request to delete a plan
         try {
             JSONObject requestBody = RpcHelper.readJSONObject(request);
-//            PlanBuilder builder = new PlanBuilder();
-//            builder.setPlanId(requestBody.getInt("plan_id"));
-//            builder.setPlanName(requestBody.getString("planname"));
-//            builder.setUserId(requestBody.getInt("user_id"));
             // Insert the plan entry into the table
             JSONObject result = new JSONObject();
             if (connection.deletePlan(requestBody.getInt("plan_id"))) {
-                result.put("result", "SUCCESS");
+                result.put("delete", "SUCCESS");
             } else {
-                result.put("result", "FAILED");
+                result.put("delete", "FAILED");
+            }
+            RpcHelper.writeJSONObject(response, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+    }
+    
+    /**
+     * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+     * 
+     * PUT method is used to update an existing plan
+     */
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
+
+        try {
+            JSONObject requestBody = RpcHelper.readJSONObject(request);
+            String oldName = requestBody.getString("planname");
+            String newName = requestBody.getString("newname");
+            int userId = requestBody.getInt("user_id");
+            // Update the plan with the new given name
+            JSONObject result = new JSONObject();
+            if (connection.updatePlan(oldName, newName, userId)) {
+                result.put("update", "SUCCESS");
+            } else {
+                result.put("update", "FAILED");
             }
             RpcHelper.writeJSONObject(response, result);
         } catch (Exception e) {

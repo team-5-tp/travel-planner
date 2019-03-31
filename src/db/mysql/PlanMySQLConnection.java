@@ -41,14 +41,14 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
         }
         
         try {
-            String sql = "SELECT * FROM plan WHERE plan_id = ?";
+            String sql = "SELECT * FROM plan WHERE id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, planId);
             
             ResultSet resultSet = statement.executeQuery();
             PlanBuilder planBuilder = new PlanBuilder();
             while (resultSet.next()) {
-                planBuilder.setPlanId(resultSet.getInt("plan_id"));
+                planBuilder.setPlanId(resultSet.getInt("id"));
                 planBuilder.setPlanName(resultSet.getString("planname"));
                 planBuilder.setUserId(resultSet.getInt("user_id"));
             }
@@ -94,7 +94,7 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
         }
         
         try {
-            String sql = "DELETE FROM plan WHERE plan_id = ?";
+            String sql = "DELETE FROM plan WHERE id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, planId);
             return statement.executeUpdate() == 1;
@@ -105,13 +105,22 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
     }
 
     @Override
-    public boolean updatePlan(Plan oldPlan, Plan newPlan) {
+    public boolean updatePlan(String oldName, String newName, int userId) {
         if (conn == null) {
             System.err.println("DB connection failed");
             return false;
         }
-        // Delete the old plan from the table and add the new plan
-        deletePlan(oldPlan.getPlanId());
-        return insertPlan(newPlan);
+        
+        try {
+            String sql = "UPDATE plan SET planname = ? WHERE user_id = ? and planname = ? ";
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, newName);
+            statement.setInt(2, userId);
+            statement.setString(3, oldName);
+            return statement.executeUpdate() == 1;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

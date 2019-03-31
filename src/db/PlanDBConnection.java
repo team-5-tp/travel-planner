@@ -38,9 +38,10 @@ public interface PlanDBConnection extends DBConnection {
     /**
      * Update an existing plan with a new plan
      * 
-     * @param oldPlan the existing plan that is about to be replaced
-     * @param newPlan the new plan that is used to update the previous plan
+     * @param oldName the name of the existing plan that is about to be replaced
+     * @param newName the designated new name for the plan
+     * @param userId  the user_id of the current user who owns this plan
      * @return        whether the plan has been successfully updated or not
      */
-    public boolean updatePlan(Plan oldPlan, Plan newPlan);
+    public boolean updatePlan(String oldName, String newName, int userId);
 }
