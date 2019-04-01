@@ -25,10 +25,10 @@ public class MySQLTableCreation {
             // Step 3 Create new tables
             // 1. user
             sql = "CREATE TABLE user ("
-                    + "user_id INT AUTO_INCREMENT,"
+                    + "id INT AUTO_INCREMENT,"
                     + "username NVARCHAR(255) NOT NULL,"
                     + "password NVARCHAR(255) NOT NULL,"
-                    + "PRIMARY KEY (user_id),"
+                    + "PRIMARY KEY (id),"
                     + "UNIQUE KEY (username)"
                     + ")";
             statement.executeUpdate(sql);
@@ -36,10 +36,10 @@ public class MySQLTableCreation {
             // 2. plan
             sql = "CREATE TABLE plan ("
                     + "id INT AUTO_INCREMENT,"
-                    + "planname NVARCHAR(255) NOT NULL,"
+                    + "name NVARCHAR(255) NOT NULL,"
                     + "user_id INT,"
                     + "PRIMARY KEY (id),"
-                    + "FOREIGN KEY (user_id) REFERENCES user(user_id)"
+                    + "FOREIGN KEY (user_id) REFERENCES user(id)"
                     + ")";
             statement.execute(sql);
 
@@ -51,7 +51,7 @@ public class MySQLTableCreation {
             // 2. plan
             // Insert a fake plan
             sql = "INSERT IGNORE INTO plan VALUES(NULL, 'LA', 1)";
-            statement.executeUpdate(sql); 
+            statement.executeUpdate(sql);
 
             conn.close();
             System.out.println("Import done successfully");

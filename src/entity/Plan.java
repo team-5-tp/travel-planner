@@ -15,7 +15,6 @@ public class Plan {
     private int planId;
     private String planName;
     private int userId;
-    private String userName;
     
     // This may not look necessary, but in case of future evolution, 
     // use a builder pattern for instantiation for now
@@ -23,7 +22,6 @@ public class Plan {
         this.planId = builder.planId;
         this.planName = builder.planName;
         this.userId = builder.userId;
-        this.userName = builder.userName;
     }
 
     public int getPlanId() {
@@ -37,10 +35,6 @@ public class Plan {
     public int getUserId() {
         return userId;
     }
-
-    public String getUserName() {
-        return userName;
-    }
     
     /**
      * Convert the plan to a JSON object such that the app can understand
@@ -50,7 +44,6 @@ public class Plan {
      *           plan_id: 
      *           planname:
      *           user_id:
-     *           username:
      *         }
      */
     public JSONObject toJSONObject() {
@@ -59,7 +52,6 @@ public class Plan {
             obj.put("plan_id", planId);
             obj.put("planname", planName);
             obj.put("user_id", userId);
-            obj.put("username", userName);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -70,7 +62,6 @@ public class Plan {
         private int planId;
         private String planName;
         private int userId;
-        private String userName;
 //        private List<POI> pointsOfInterest; 
 
         public void setPlanId(int planId) {
@@ -83,10 +74,6 @@ public class Plan {
         
         public void setUserId(int userId) {
             this.userId = userId;
-        }
-
-        public void setUserName(String userName) {
-            this.userName = userName;
         }
 
         public Plan build() {

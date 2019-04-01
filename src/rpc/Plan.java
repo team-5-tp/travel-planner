@@ -14,21 +14,19 @@ import org.json.JSONObject;
 
 import db.PlanDBConnection;
 import db.PlanDBConnectionFactory;
-
-import entity.Plan;
 import entity.Plan.PlanBuilder;
 
 /**
  * Servlet implementation class UserPlan
  */
-@WebServlet("/userplan")
-public class UserPlan extends HttpServlet {
+@WebServlet("/plan")
+public class Plan extends HttpServlet {
     private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UserPlan() {
+    public Plan() {
         super();
     }
 
@@ -53,8 +51,8 @@ public class UserPlan extends HttpServlet {
             int userId = Integer.parseInt(request.getParameter("user_id"));
             JSONArray array = new JSONArray();
             // Convert all saved plans into JSON object and put them all into the JSON array
-            List<Plan> allPlans = connection.getAllPlans(userId);
-            for (Plan plan : allPlans) {
+            List<entity.Plan> allPlans = connection.getAllPlans(userId);
+            for (entity.Plan plan : allPlans) {
                 array.put(plan.toJSONObject());
             }
             RpcHelper.writeJsonArray(response, array);
@@ -131,12 +129,12 @@ public class UserPlan extends HttpServlet {
 
         try {
             JSONObject requestBody = RpcHelper.readJSONObject(request);
-            String oldName = requestBody.getString("planname");
-            String newName = requestBody.getString("newname");
+            int planId = requestBody.getInt("plan_id");
+            String newName = requestBody.getString("planname");
             int userId = requestBody.getInt("user_id");
             // Update the plan with the new given name
             JSONObject result = new JSONObject();
-            if (connection.updatePlan(oldName, newName, userId)) {
+            if (connection.updatePlan(planId, newName)) {
                 result.put("update", "SUCCESS");
             } else {
                 result.put("update", "FAILED");

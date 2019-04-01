@@ -49,7 +49,7 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
             PlanBuilder planBuilder = new PlanBuilder();
             while (resultSet.next()) {
                 planBuilder.setPlanId(resultSet.getInt("id"));
-                planBuilder.setPlanName(resultSet.getString("planname"));
+                planBuilder.setPlanName(resultSet.getString("name"));
                 planBuilder.setUserId(resultSet.getInt("user_id"));
             }
             plan = planBuilder.build();
@@ -76,7 +76,7 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
             while (resultSet.next()) {
                 PlanBuilder planBuilder = new PlanBuilder();
                 planBuilder.setPlanId(resultSet.getInt("id"));
-                planBuilder.setPlanName(resultSet.getString("planname"));
+                planBuilder.setPlanName(resultSet.getString("name"));
                 planBuilder.setUserId(resultSet.getInt("user_id"));
                 allPlans.add(planBuilder.build());
             }
@@ -105,18 +105,17 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
     }
 
     @Override
-    public boolean updatePlan(String oldName, String newName, int userId) {
+    public boolean updatePlan(int planId, String newName) {
         if (conn == null) {
             System.err.println("DB connection failed");
             return false;
         }
         
         try {
-            String sql = "UPDATE plan SET planname = ? WHERE user_id = ? and planname = ? ";
+            String sql = "UPDATE plan SET name = ? WHERE id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, newName);
-            statement.setInt(2, userId);
-            statement.setString(3, oldName);
+            statement.setInt(2, planId);
             return statement.executeUpdate() == 1;
         } catch (Exception e) {
             e.printStackTrace();
