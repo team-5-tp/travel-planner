@@ -39,19 +39,16 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 		UserDBConnection connection = UserDBConnectionFactory.getConnection();
 		try {
-			JSONObject input = RpcHelper.readJSONObject(request);
+			JSONObject input = rpc.RpcHelper.readJSONObject(request);
 			String username = input.getString("username");
 			String password = input.getString("password");
-			User user=connection.getByUsernamePassword(username, password);
-			JSONObject obj = new JSONObject();
-			if (user!=null) {
-				obj.put("status", "OK").put("token", JwtToken.createToken(user));
+			User user = connection.getByUsernamePassword(username, password);
+			if (user != null) {
+				response.addHeader("Authorization", "Bearer "+JwtToken.createToken(user));
+				response.setStatus(200);
 			} else {
 				response.setStatus(401);
-				obj.put("status", "User Doesn't Exists");
 			}
-			RpcHelper.writeJSONObject(response, obj);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

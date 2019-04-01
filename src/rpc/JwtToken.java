@@ -3,6 +3,10 @@ package rpc;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.tomcat.util.log.SystemLogHandler;
+
 import com.auth0.jwt.*;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
@@ -12,28 +16,25 @@ import db.UserDBConnection;
 import entity.User;
 
 public class JwtToken {
-	private static final String KEY="team5-tp";
+	private static final String KEY = "team5-tp";
+	private static final String BEARER = "Bearer ";
+
 	public static String createToken(User user) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("alg", "HS256");
 		map.put("typ", "JWT");
-		String token = JWT.create()
-				.withHeader(map)// header
+		String token = JWT.create().withHeader(map)// header
 				.withClaim("user_id", user.getId())// payload
 				.sign(Algorithm.HMAC256(KEY));// º”√‹
 		return token;
 	}
 
 	public static boolean verifyToken(String token) throws Exception {
-		JWTVerifier verifier = JWT.require(Algorithm.HMAC256(KEY)).build();
-		DecodedJWT jwt = verifier.verify(token);
-		Map<String, Claim> claims = jwt.getClaims();
 		UserDBConnection connection = new db.mysql.UserDBConnection();
 		try {
-			User user = connection.getById(claims.get("user_id").asInt());
-			if (user != null) {
-				return true;
-			}
+			JWTVerifier verifier = JWT.require(Algorithm.HMAC256(KEY)).build();
+			verifier.verify(token);
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -41,16 +42,39 @@ public class JwtToken {
 		}
 		return false;
 	}
-	public static void main(String[] args) {
+
+	public static int getUserId(HttpServletRequest request) throws Exception {
+		String token = request.getHeader("Authorization");
+		if (token == null || !token.startsWith(BEARER))
+			return -1;
+		 token.replace(BEARER, "");
+		
 		UserDBConnection connection = new db.mysql.UserDBConnection();
-		User user=connection.getById(1111);
 		try {
-		String token=createToken(user);
-		System.out.print(verifyToken(token));
+			JWTVerifier verifier = JWT.require(Algorithm.HMAC256(KEY)).build();
+			DecodedJWT jwt = verifier.verify(token);
+			Map<String, Claim> claims = jwt.getClaims();
+			User user = connection.getById(claims.get("user_id").asInt());
+			return user.getId();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			connection.close();
+		}
+		return -1;
+	}
+
+	public static void main(String[] arges) {
+		UserDBConnection connection = new db.mysql.UserDBConnection();
+		User user = connection.getById(1);
+		try {
+			String token = createToken(user);
+			System.out.println(verifyToken(token));
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			connection.close();
 		}
 	}
+
 }
