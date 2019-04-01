@@ -131,7 +131,6 @@ public class Plan extends HttpServlet {
             JSONObject requestBody = RpcHelper.readJSONObject(request);
             int planId = requestBody.getInt("plan_id");
             String newName = requestBody.getString("planname");
-            int userId = requestBody.getInt("user_id");
             // Update the plan with the new given name
             JSONObject result = new JSONObject();
             if (connection.updatePlan(planId, newName)) {
