@@ -51,7 +51,6 @@ public class Plan {
         try {
             obj.put("plan_id", planId);
             obj.put("planname", planName);
-            obj.put("user_id", userId);
         } catch (JSONException e) {
             e.printStackTrace();
         }
