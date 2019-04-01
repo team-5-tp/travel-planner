@@ -12,8 +12,17 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RpcHelper {
+	// Writes a text to http response.
+	public static void writeText(HttpServletResponse response, String text) throws IOException {
+		response.setContentType("text/plain");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		out.print(text);
+		out.close();
+	}
+	
 	// Writes a JSONArray to http response.
-	public static void writeJsonArray(HttpServletResponse response, JSONArray array) throws IOException {
+	public static void writeJSONArray(HttpServletResponse response, JSONArray array) throws IOException {
 		response.setContentType("appliaction/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
@@ -22,7 +31,7 @@ public class RpcHelper {
 	}
 
 	// Writes a JSONObject to http response.
-	public static void writeJsonObject(HttpServletResponse response, JSONObject obj) throws IOException {
+	public static void writeJSONObject(HttpServletResponse response, JSONObject obj) throws IOException {
 		response.setContentType("appliaction/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();

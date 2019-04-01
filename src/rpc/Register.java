@@ -35,16 +35,12 @@ public class Register extends HttpServlet {
 		UserDBConnection connection = UserDBConnectionFactory.getConnection();
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
-			JSONObject output =new JSONObject();
 			User user=User.fromJSONObject(input);
 			if (connection.create(user)) {                                                                        
-				output.put("status", "OK").put("token", JwtToken.createToken(user));
+				response.setStatus(200);
 			} else {
-				response.setStatus(401);
-				output.put("status", "Registration failed");
+				response.setStatus(409);
 			}
-			RpcHelper.writeJsonObject(response, output);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
