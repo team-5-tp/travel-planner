@@ -16,7 +16,8 @@ public interface PlanDBConnection extends DBConnection {
     /**
      * Get a specific plan of a user given plan_id
      * 
-     * @param planId the plan_id of the querying user plan
+     * @param planId the id of the querying plan
+     * @return the plan with the specified id
      */
     public Plan getPlan(int planId);
     
@@ -24,6 +25,7 @@ public interface PlanDBConnection extends DBConnection {
      * Get all saved plans of the given user
      * 
      * @param userId the user_id of the given user
+     * @return a list of all of the plans saved by the user
      */
     public List<Plan> getAllPlans(int userId);
     

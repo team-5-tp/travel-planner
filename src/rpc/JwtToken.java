@@ -25,7 +25,7 @@ public class JwtToken {
 		map.put("typ", "JWT");
 		String token = JWT.create().withHeader(map)// header
 				.withClaim("user_id", user.getId())// payload
-				.sign(Algorithm.HMAC256(KEY));// ¼ÓÃÜ
+				.sign(Algorithm.HMAC256(KEY));// ï¿½ï¿½ï¿½ï¿½
 		return token;
 	}
 
@@ -45,9 +45,14 @@ public class JwtToken {
 
 	public static int getUserId(HttpServletRequest request) throws Exception {
 		String token = request.getHeader("Authorization");
-		if (token == null || !token.startsWith(BEARER))
+		System.out.println(token);
+		// if (token == null || !token.startsWith(BEARER)) {
+		if (token == null) {
+			System.out.println("Entered corner case");
 			return -1;
-		 token.replace(BEARER, "");
+		}
+		token = token.replace(BEARER, "");
+		System.out.println(token);
 		
 		UserDBConnection connection = new db.mysql.UserDBConnection();
 		try {
@@ -65,6 +70,7 @@ public class JwtToken {
 	}
 
 	public static void main(String[] arges) {
+		/*
 		UserDBConnection connection = new db.mysql.UserDBConnection();
 		User user = connection.getById(1);
 		try {
@@ -75,6 +81,7 @@ public class JwtToken {
 		} finally {
 			connection.close();
 		}
+		*/
 	}
 
 }
