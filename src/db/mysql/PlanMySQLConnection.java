@@ -28,9 +28,9 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
             // Get the generated id of the inserted plan
             ResultSet resultSet = statement.getGeneratedKeys();
             if (resultSet.next()) {
-            	plan.setId(resultSet.getInt(1));
+                plan.setId(resultSet.getInt(1));
             } else {
-//            	throw new Exception("no keys generated");
+                throw new Exception("no keys generated");
             }
             return result == 1;
         } catch (Exception e) {
@@ -40,7 +40,7 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
     }
 
     @Override
-    public Plan getPlan(int id) {
+    public Plan getPlan(int id, int userId) {
         Plan plan = null;
         if (conn == null) {
             System.err.println("DB connection failed");
@@ -48,9 +48,10 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
         }
         
         try {
-            String sql = "SELECT * FROM plan WHERE id = ?";
+            String sql = "SELECT * FROM plan WHERE id = ? and user_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, id);
+            statement.setInt(2, userId);
             
             ResultSet resultSet = statement.executeQuery();
             PlanBuilder planBuilder = new PlanBuilder();
@@ -94,16 +95,17 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
     }
 
     @Override
-    public boolean deletePlan(int id) {
+    public boolean deletePlan(int id, int userId) {
         if (conn == null) {
             System.err.println("DB connection failed");
             return false;
         }
         
         try {
-            String sql = "DELETE FROM plan WHERE id = ?";
+            String sql = "DELETE FROM plan WHERE id = ? and user_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setInt(1, id);
+            statement.setInt(2, userId);
             return statement.executeUpdate() == 1;
         } catch (Exception e) {
             e.printStackTrace();
@@ -112,17 +114,18 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
     }
 
     @Override
-    public boolean updatePlan(int id, String newName) {
+    public boolean updatePlan(int id, String newName, int userId) {
         if (conn == null) {
             System.err.println("DB connection failed");
             return false;
         }
         
         try {
-            String sql = "UPDATE plan SET name = ? WHERE id = ?";
+            String sql = "UPDATE plan SET name = ? WHERE id = ? and user_id = ?";
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, newName);
             statement.setInt(2, id);
+            statement.setInt(3, userId);
             return statement.executeUpdate() == 1;
         } catch (Exception e) {
             e.printStackTrace();

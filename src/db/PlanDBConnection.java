@@ -16,10 +16,11 @@ public interface PlanDBConnection extends DBConnection {
     /**
      * Get a specific plan of a user given plan_id
      * 
-     * @param planId the id of the querying plan
+     * @param id     the id of the querying plan
+     * @param userId ID of the owner of the plan
      * @return the plan with the specified id
      */
-    public Plan getPlan(int planId);
+    public Plan getPlan(int Id, int userId);
     
     /**
      * Get all saved plans of the given user
@@ -32,17 +33,19 @@ public interface PlanDBConnection extends DBConnection {
     /**
      * Delete a specific plan from the table
      * 
-     * @param plan the ID of the plan to be deleted
+     * @param id     the ID of the plan to be deleted
+     * @param userId the ID of the user who owns the plan
      * @return     whether the plan has been deleted or not
      */
-    public boolean deletePlan(int planId);
+    public boolean deletePlan(int planId, int userId);
     
     /**
      * Update an existing plan with a new plan
      * 
-     * @param planId  the ID of the existing plan that is about to be updated
+     * @param id  the ID of the existing plan that is about to be updated
      * @param newName the designated new name for the plan
+     * @param userId  the ID of the user who owns the plan
      * @return        whether the plan has been successfully updated or not
      */
-    public boolean updatePlan(int planId, String newName);
+    public boolean updatePlan(int id, String newName, int userId);
 }

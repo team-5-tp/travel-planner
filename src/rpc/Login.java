@@ -1,16 +1,11 @@
 package rpc;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.json.JSONObject;
 
 import db.UserDBConnection;
@@ -39,7 +34,7 @@ public class Login extends HttpServlet {
 			throws ServletException, IOException {
 		UserDBConnection connection = UserDBConnectionFactory.getConnection();
 		try {
-			JSONObject input = rpc.RpcHelper.readJSONObject(request);
+			JSONObject input = RpcHelper.readJSONObject(request);
 			String username = input.getString("username");
 			String password = input.getString("password");
 			User user = connection.getByUsernamePassword(username, password);
