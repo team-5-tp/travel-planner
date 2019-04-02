@@ -21,123 +21,165 @@ import entity.Plan.PlanBuilder;
  */
 @WebServlet("/plan")
 public class Plan extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public Plan() {
-		super();
-	}
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Plan() {
+        super();
+    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 *
-	 *      GET method is used to fetch a specific plan
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Get the database reference
-		PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
-		try {
-			// Get all the saved plans of the user
-			JSONArray array = new JSONArray();//Todo: return a plan by id
-			// Convert all saved plans into JSON object and put them all into the JSON array
-			List<entity.Plan> allPlans = connection.getAllPlans(JwtToken.getUserId(request));
-			for (entity.Plan plan : allPlans) {
-				array.put(plan.toJSONObject());
-			}
-			RpcHelper.writeJSONArray(response, array);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			connection.close();
-		}
-	}
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     *      response)
+     *
+     *      GET method is used to fetch a specific plan
+     */
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        // Get the database reference
+        PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
+        try {
+            // 2 cases:
+            //   1. get the plan with a specified plan id
+            //   2. get all saved plans of a user if no plan id is given
+            String requestedId = request.getParameter("id");
+            int userId = JwtToken.getUserId(request);
+            if (requestedId == null) {
+                getAllPlans(request, response, connection, userId);
+            } else {
+                getPlanById(request, response, connection, Integer.parseInt(requestedId), userId);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 *
-	 *      POST method is used to save a plan
-	 * 
-	 * @param request  the HTTP request that contains the plan info to be saved
-	 * @param response the HTTP response generated after saving the plan
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
-		// Send a request to add a plan
-		try {
-			JSONObject requestBody = RpcHelper.readJSONObject(request);
-			PlanBuilder builder = new PlanBuilder();
-			builder.setPlanName(requestBody.getString("name"));
-			builder.setUserId(JwtToken.getUserId(request));
-			// Insert the plan entry into the table
-			JSONObject result = new JSONObject();// Todo: return plan id
-			if (connection.insertPlan(builder.build())) {
-				RpcHelper.writeJSONObject(response, result);
-				response.setStatus(200);
-			} else {
-				response.setStatus(500);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			connection.close();
-		}
-	}
+    private void getAllPlans(HttpServletRequest request, HttpServletResponse response, PlanDBConnection connection, int userId)
+            throws Exception, IOException {
+        // Get all the saved plans of the user
+        JSONArray array = new JSONArray();
+        // Convert all saved plans into JSON object and put them all into the JSON array
+        List<entity.Plan> allPlans = connection.getAllPlans(userId);
+        if (allPlans == null) {
+            response.setStatus(500);
+            throw new Exception("No such plans");
+        }
+        for (entity.Plan plan : allPlans) {
+            array.put(plan.toJSONObject());
+        }
+        RpcHelper.writeJSONArray(response, array);
+        response.setStatus(200);
+    }
+    
+    private void getPlanById(HttpServletRequest request, HttpServletResponse response, PlanDBConnection connection, int id, int userId)
+            throws Exception, IOException {
+        // Get the specified plan of the given id
+        entity.Plan plan = connection.getPlan(id, userId);
+        if (plan == null) {
+            response.setStatus(500);
+            throw new Exception("No plan of this id");
+        }
+        RpcHelper.writeJSONObject(response, plan.toJSONObject());
+        response.setStatus(200);
+    }
 
-	/**
-	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
-	 * 
-	 *      DELETE method is used to delete a user plan
-	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
-		// Send a request to delete a plan
-		try {
-			JSONObject requestBody = RpcHelper.readJSONObject(request);
-			// Insert the plan entry into the table
-			JSONObject result = new JSONObject();
-			if (connection.deletePlan(requestBody.getInt("id"))) {
-				response.setStatus(200);
-			} else {
-				response.setStatus(500);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			connection.close();
-		}
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     *      response)
+     *
+     *      POST method is used to save a plan
+     * 
+     * @param request  the HTTP request that contains the plan info to be saved
+     * @param response the HTTP response generated after saving the plan
+     */
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
+        // Send a request to add a plan
+        try {
+            JSONObject requestBody = RpcHelper.readJSONObject(request);
+            PlanBuilder builder = new PlanBuilder();
+            builder.setName(requestBody.getString("name"));
+            builder.setUserId(JwtToken.getUserId(request));
+            // Insert the plan entry into the table
+            entity.Plan plan = builder.build();
+            if (connection.insertPlan(plan)) {
+                // Upon successful insertion, the plan object will get an autogenerated id
+                RpcHelper.writeJSONObject(response, plan.toJSONObject());
+                response.setStatus(200);
+            } else {
+                response.setStatus(500);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+    }
 
-	/**
-	 * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
-	 * 
-	 *      PUT method is used to update an existing plan
-	 */
-	protected void doPut(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
+    /**
+     * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
+     * 
+     *      DELETE method is used to delete a user plan
+     */
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
+        // Send a request to delete a plan
+        try {
+            JSONObject requestBody = RpcHelper.readJSONObject(request);
+            int id = requestBody.getInt("id");
+            int userId = JwtToken.getUserId(request);
+            // Insert the plan entry into the table
+            JSONObject result = new JSONObject();
+            if (connection.deletePlan(id, userId)) {
+                result.put("delete", "SUCCESS");
+                response.setStatus(200);
+            } else {
+                result.put("delete", "FAILED");
+                response.setStatus(500);
+            }
+            RpcHelper.writeJSONObject(response, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+    }
 
-		try {
-			JSONObject requestBody = RpcHelper.readJSONObject(request);
-			int planId = requestBody.getInt("id");
-			String newName = requestBody.getString("name");
-			// Update the plan with the new given name
-			JSONObject result = new JSONObject();
-			if (connection.updatePlan(planId, newName)) {
-				response.setStatus(200);
-			} else {
-				response.setStatus(500);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			connection.close();
-		}
-	}
+    /**
+     * @see HttpServlet#doPut(HttpServletRequest, HttpServletResponse)
+     * 
+     *      PUT method is used to update an existing plan
+     */
+    protected void doPut(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        PlanDBConnection connection = PlanDBConnectionFactory.getConnection();
+
+        try {
+            JSONObject requestBody = RpcHelper.readJSONObject(request);
+            int id = requestBody.getInt("id");
+            String newName = requestBody.getString("name");
+            int userId = JwtToken.getUserId(request);
+            // Update the plan with the new given name
+            if (connection.updatePlan(id, newName, userId)) {
+                // Write the updated plan info to the response
+                getPlanById(request, response, connection, id, userId);
+                response.setStatus(200);
+            } else {
+                // Write a failed message to the response
+                JSONObject result = new JSONObject();
+                RpcHelper.writeJSONObject(response, result.put("update", "FAILED"));
+                response.setStatus(500);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            connection.close();
+        }
+    }
 }
