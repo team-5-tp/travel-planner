@@ -45,12 +45,12 @@ public class MySQLTableCreation {
 
             // Step 4: insert fake user 1111/3229c1097c00d497a0fd282d586be050
             // 1. user
-            sql = "INSERT IGNORE INTO user VALUES(NULL,'1111', '2222')";
+            sql = "INSERT IGNORE INTO user (username,password) VALUES('1111', '2222')";
             statement.executeUpdate(sql);
             
             // 2. plan
             // Insert a fake plan
-            sql = "INSERT IGNORE INTO plan VALUES(NULL, 'LA', 1)";
+            sql = "INSERT IGNORE INTO plan (name,user_id) VALUES('LA', 1)";
             statement.executeUpdate(sql);
 
             conn.close();

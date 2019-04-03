@@ -39,7 +39,8 @@ public class Login extends HttpServlet {
 			String password = input.getString("password");
 			User user = connection.getByUsernamePassword(username, password);
 			if (user != null) {
-				response.addHeader("Authorization", "Bearer "+JwtToken.createToken(user));
+				String token=JwtToken.createToken(user);
+				RpcHelper.writeText(response, token);
 				response.setStatus(200);
 			} else {
 				response.setStatus(401);

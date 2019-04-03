@@ -23,6 +23,7 @@ public class RpcHelper {
 	public static void writeJSONArray(HttpServletResponse response, JSONArray array) throws IOException {
 		response.setContentType("appliaction/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 		PrintWriter out = response.getWriter();
 		out.print(array);
 		out.close();
@@ -32,6 +33,7 @@ public class RpcHelper {
 	public static void writeJSONObject(HttpServletResponse response, JSONObject obj) throws IOException {
 		response.setContentType("appliaction/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 		PrintWriter out = response.getWriter();
 		out.print(obj);
 		out.close();
