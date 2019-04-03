@@ -45,4 +45,12 @@ public class RpcHelper {
 
 		return new JSONObject();
 	}
+	// Writes a text to http response.
+	public static void writeText(HttpServletResponse response, String text) throws IOException {
+		response.setContentType("text/plain");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		out.print(text);
+		out.close();
+	}
 }

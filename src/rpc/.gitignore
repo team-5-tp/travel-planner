@@ -10,3 +10,6 @@
 /JWtToken.class
 /GetPoints.class
 /UpdatePoint.class
+/JwtToken.class
+/Poi.class
+/rpcPoi.class

@@ -21,7 +21,7 @@ public class MySQLTableCreation {
 			String sql = "DROP TABLE IF EXISTS user";
 			statement.executeUpdate(sql);
 
-			// Step 3 Create new tables
+			// Step 3 Create new tables user
 			sql = "CREATE TABLE user ("
 					+ "user_id INT AUTO_INCREMENT,"
 					+ "username NVARCHAR(255) NOT NULL,"
@@ -34,7 +34,7 @@ public class MySQLTableCreation {
 			
 	
 			
-			// create point of interest table
+			// 3.1 create point of interest table
 			sql = "DROP TABLE IF EXISTS poi";
 			statement.executeUpdate(sql);
 
@@ -45,7 +45,6 @@ public class MySQLTableCreation {
 					+ "plan_id INT,"
 					+ "venue_id NVARCHAR(255) NOT NULL,"
 					+ "PRIMARY KEY (poi_id)"
-					+ "user_id INT"
 					+ ")";
 			statement.executeUpdate(sql);
 
