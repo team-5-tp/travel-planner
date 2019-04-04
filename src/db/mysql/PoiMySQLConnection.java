@@ -16,13 +16,13 @@ import java.util.ArrayList;
 public class PoiMySQLConnection extends MySQLConnection implements PoiDBConnection {
 
 	@Override
-	public String addPoint(Poi poi) {
+	public int addPoint(Poi poi) {
 		// TODO Auto-generated method stub
 		if (conn == null) {
 			System.err.println("DB connection failed");
-			return "";
+			return -1;
 		}
-		String poiId = "";
+		int poiId = 0;
 		try {
 			// help execute sql in database
 			String sql = "INSERT INTO poi VALUE(?,?,?,?,?)";
@@ -37,20 +37,27 @@ public class PoiMySQLConnection extends MySQLConnection implements PoiDBConnecti
 			// Get the generated id of the inserted plan    
 			ResultSet resultSet = ps.getGeneratedKeys();
             if (resultSet.next()) {
-                poiId = String.valueOf(resultSet.getInt(1));
+                poiId = resultSet.getInt(1);
             }
 //            else {
 //            	throw new Exception("no keys generated");
 //            }
-            if (result == 1) {
-            	return poiId;
-            }
-            return "";
+            if (result != 1) {
+				System.out.println("insert sql failed");
+            	return -1;
+			}
+			else{
+				if (poiId == 0){
+					System.out.println("generate poi_id failed");
+					return poiId;
+				}
+				return poiId;
+			}
 		}
 		catch (SQLException e) {
 				e.printStackTrace();
 		}
-		return "";
+		return -1;
 	}
 
 	@Override

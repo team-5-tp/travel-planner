@@ -72,8 +72,8 @@ public class rpcPoi extends HttpServlet {
 	        poiBuilder.setVenueId(request.getParameter("venue_id").toString());
 	        poiBuilder.setPlanId(Integer.parseInt(request.getParameter("plan_id")));
 	        Poi poi = poiBuilder.build();
-	        String poiId = connection.addPoint(poi);
-	        if (!poiId.equals("")) {
+	        int poiId = connection.addPoint(poi);
+	        if (poiId > 0) {
 	        	obj.put("result", "success");
 	        	response.setStatus(200);
 	        }

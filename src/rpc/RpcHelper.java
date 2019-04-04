@@ -3,7 +3,10 @@ package rpc;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9250597c25db04030793002b509cf1234f9a1fa6
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,19 +14,30 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RpcHelper {
+	// Writes a text to http response.
+	public static void writeText(HttpServletResponse response, String text) throws IOException {
+		response.setContentType("text/plain");
+		response.setHeader("Access-Control-Allow-Origin", "*");
+		PrintWriter out = response.getWriter();
+		out.print(text);
+		out.close();
+	}
+	
 	// Writes a JSONArray to http response.
-	public static void writeJsonArray(HttpServletResponse response, JSONArray array) throws IOException {
+	public static void writeJSONArray(HttpServletResponse response, JSONArray array) throws IOException {
 		response.setContentType("appliaction/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 		PrintWriter out = response.getWriter();
 		out.print(array);
 		out.close();
 	}
 
 	// Writes a JSONObject to http response.
-	public static void writeJsonObject(HttpServletResponse response, JSONObject obj) throws IOException {
+	public static void writeJSONObject(HttpServletResponse response, JSONObject obj) throws IOException {
 		response.setContentType("appliaction/json");
 		response.setHeader("Access-Control-Allow-Origin", "*");
+		response.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 		PrintWriter out = response.getWriter();
 		out.print(obj);
 		out.close();
