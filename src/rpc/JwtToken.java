@@ -17,6 +17,7 @@ import entity.User;
 
 public class JwtToken {
     private static final String KEY = "team5-tp";
+    private static final String AUTHORIZATION="Authorization";
     private static final String BEARER = "Bearer ";
 
     public static String createToken(User user) throws Exception {
@@ -29,7 +30,12 @@ public class JwtToken {
         return token;
     }
 
-    public static boolean verifyToken(String token) throws Exception {
+    public static boolean verifyToken(HttpServletRequest request)  throws Exception {
+    	String token= request.getHeader(AUTHORIZATION);
+        if (token == null || !token.startsWith(BEARER)) {
+            return false;
+        }
+        token = token.replace(BEARER, "");
         UserDBConnection connection = new db.mysql.UserDBConnection();
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(KEY)).build();
@@ -44,7 +50,7 @@ public class JwtToken {
     }
 
     public static int getUserId(HttpServletRequest request) throws Exception {
-        String token = request.getHeader("Authorization");
+        String token = request.getHeader(AUTHORIZATION);
         if (token == null || !token.startsWith(BEARER)) {
             return -1;
         }
@@ -71,7 +77,7 @@ public class JwtToken {
         try {
             String token = createToken(user);
             System.out.println(token);
-            System.out.println(verifyToken(token));
+            //System.out.println(verifyToken(token));
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
