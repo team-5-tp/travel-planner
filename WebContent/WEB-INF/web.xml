@@ -4,14 +4,13 @@
   <filter>
     <filter-name>authFilter</filter-name>
     <filter-class>rpc.AuthorizationFilter</filter-class>
-	</filter>
-
-<filter-mapping>
+  </filter>
+  <filter-mapping>
     <filter-name>authFilter</filter-name>
     <url-pattern>/plan/*</url-pattern>
-</filter-mapping>
-<filter-mapping>
+  </filter-mapping>
+  <filter-mapping>
     <filter-name>authFilter</filter-name>
     <url-pattern>/poi/*</url-pattern>
-</filter-mapping>
+  </filter-mapping>
 </web-app>
