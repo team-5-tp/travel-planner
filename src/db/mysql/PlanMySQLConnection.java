@@ -113,13 +113,13 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
 			stat2.executeUpdate();
 			conn.commit();
 			return true;
-		} catch (SQLException e) {			
+		} catch (SQLException e) {
 			e.printStackTrace();
 			try {
 				conn.rollback();
-				} catch (SQLException e1) {
+			} catch (SQLException e1) {
 				e1.printStackTrace();
-				}
+			}
 		}
 		return false;
 	}
