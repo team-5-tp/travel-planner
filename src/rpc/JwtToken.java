@@ -36,7 +36,7 @@ public class JwtToken {
             return false;
         }
         token = token.replace(BEARER, "");
-        UserDBConnection connection = new db.mysql.UserDBConnection();
+        UserDBConnection connection = new db.mysql.UserMySQLConnection();
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(KEY)).build();
             verifier.verify(token);
@@ -56,7 +56,7 @@ public class JwtToken {
         }
         token = token.replace(BEARER, "");
         
-        UserDBConnection connection = new db.mysql.UserDBConnection();
+        UserDBConnection connection = new db.mysql.UserMySQLConnection();
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(KEY)).build();
             DecodedJWT jwt = verifier.verify(token);
@@ -72,7 +72,7 @@ public class JwtToken {
     }
 
     public static void main(String[] arges) {
-        UserDBConnection connection = new db.mysql.UserDBConnection();
+        UserDBConnection connection = new db.mysql.UserMySQLConnection();
         User user = connection.getById(1);
         try {
             String token = createToken(user);

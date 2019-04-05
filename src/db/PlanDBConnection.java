@@ -20,7 +20,7 @@ public interface PlanDBConnection extends DBConnection {
      * @param userId ID of the owner of the plan
      * @return the plan with the specified id
      */
-    public Plan getPlan(int Id, int userId);
+    public Plan getPlan(int id);
     
     /**
      * Get all saved plans of the given user
@@ -37,7 +37,7 @@ public interface PlanDBConnection extends DBConnection {
      * @param userId the ID of the user who owns the plan
      * @return     whether the plan has been deleted or not
      */
-    public boolean deletePlan(int planId, int userId);
+    public boolean deletePlan(int id);
     
     /**
      * Update an existing plan with a new plan
@@ -47,5 +47,5 @@ public interface PlanDBConnection extends DBConnection {
      * @param userId  the ID of the user who owns the plan
      * @return        whether the plan has been successfully updated or not
      */
-    public boolean updatePlan(int id, String newName, int userId);
+    public boolean updatePlan(Plan plan);
 }

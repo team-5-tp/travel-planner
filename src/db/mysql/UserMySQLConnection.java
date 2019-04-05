@@ -13,7 +13,7 @@ import com.mysql.cj.exceptions.ExceptionInterceptor;
 
 import entity.User;
 
-public class UserDBConnection extends MySQLConnection implements db.UserDBConnection{
+public class UserMySQLConnection extends MySQLConnection implements db.UserDBConnection{
 //	public static void main(String[] args) {
 //		UserDBConnection connection=new UserDBConnection();
 //		Integer id=null;

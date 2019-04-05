@@ -9,7 +9,7 @@ public class UserDBConnectionFactory {
 	public static UserDBConnection getConnection(String db) {
 		switch (db) {
 		case "mysql":
-			return new  db.mysql.UserDBConnection();
+			return new  db.mysql.UserMySQLConnection();
 		default:
 			throw new IllegalArgumentException("Invalid db:" + db);
 		}

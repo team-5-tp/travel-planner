@@ -39,7 +39,8 @@ public class MySQLTableCreation {
             sql = "CREATE TABLE plan ("
                     + "id INT AUTO_INCREMENT,"
                     + "name NVARCHAR(255) NOT NULL,"
-                    + "user_id INT,"
+                    + "city NVARCHAR(255) NOT NULL,"
+                    + "user_id INT NOT NULL,"
                     + "PRIMARY KEY (id),"
                     + "FOREIGN KEY (user_id) REFERENCES user(id)"
                     + ")";
@@ -49,8 +50,8 @@ public class MySQLTableCreation {
             sql = "CREATE TABLE poi ("
                     + "id INT AUTO_INCREMENT,"
                     + "name NVARCHAR(255) NOT NULL,"
-                    + "visiting_order INT"
-                    + "plan_id INT,"
+                    + "visiting_order INT NOT NULL,"
+                    + "plan_id INT NOT NULL,"
                     + "venue_id NVARCHAR(255) NOT NULL,"
                     + "PRIMARY KEY (id),"
                     + "FOREIGN KEY (plan_id) REFERENCES plan(id)"
@@ -64,15 +65,17 @@ public class MySQLTableCreation {
             
             // 2. plan
             // Insert a fake plan
-            sql = "INSERT IGNORE INTO plan (name, user_id) VALUES('LA', 1)";
+            sql = "INSERT IGNORE INTO plan (name,city, user_id) VALUES('Best Trip to Hong Kong','Hong Kong', 1)";
             statement.executeUpdate(sql);
             
             // 3. poi
             // Insert two fake points: universal studio, getty
-            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) "
-                    + "VALUES('universal', 1, 1, 1)";
+            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) VALUES ('Morning Trail, The Peak (…ΩÌî≥øﬂ\èΩ)', 1, 1, '4b107f95f964a520c17123e3')";
             statement.executeUpdate(sql);
-
+            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) VALUES ('Four Seasons Hotel Hong Kong (œ„∏€Àƒºææ∆µÍ)', 2, 1, '4bb697b3ef159c74493d76f7')";
+            statement.executeUpdate(sql);
+            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) VALUES ('Dragon''s Back (˝àºπ)', 3, 1, '4b0588ccf964a52080da22e3')";
+            statement.executeUpdate(sql);
             conn.close();
             System.out.println("Successfully created tables");
         } catch (Exception e) {
