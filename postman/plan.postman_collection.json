@@ -24,10 +24,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"city\": \"Hong Kong\",\r\n    \"name\": \"Best Trip to Hong Kong 2\"\r\n}"
+					"raw": "{\r\n    \"city\": \"Hong Kong\",\r\n    \"name\": \"Best Trip to Hong Kong\"\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/plan/",
+					"raw": "http://localhost:8080/TravelPlanner/plan",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -35,8 +35,7 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"plan",
-						""
+						"plan"
 					]
 				}
 			},
@@ -58,7 +57,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/plan/?id=1",
+					"raw": "http://localhost:8080/TravelPlanner/plan?id=22",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -66,13 +65,12 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"plan",
-						""
+						"plan"
 					],
 					"query": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": "22"
 						}
 					]
 				}
@@ -98,10 +96,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"city\": \"Hong Kong\",\n    \"name\": \"Best Trip to Hong Kong new\",\n    \"id\": 1,\n    \"user_Id\": 1\n}"
+					"raw": "{\n    \"city\": \"Hong Kong\",\n    \"name\": \"Best Trip to Hong Kong new\",\n    \"id\": 22,\n    \"user_id\": 1\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/plan/",
+					"raw": "http://localhost:8080/TravelPlanner/plan",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -109,8 +107,7 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"plan",
-						""
+						"plan"
 					]
 				}
 			},
@@ -141,7 +138,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/plan/?id=1",
+					"raw": "http://localhost:8080/TravelPlanner/plan?id=22",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -149,13 +146,12 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"plan",
-						""
+						"plan"
 					],
 					"query": [
 						{
 							"key": "id",
-							"value": "1"
+							"value": "22"
 						}
 					]
 				}
@@ -187,7 +183,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/plan/",
+					"raw": "http://localhost:8080/TravelPlanner/plan",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -195,8 +191,7 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"plan",
-						""
+						"plan"
 					]
 				}
 			},

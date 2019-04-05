@@ -24,10 +24,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"poi 1\",\r\n    \"visiting_order\":\"2\",\r\n    \"plan_id\":1,\r\n    \"venue_id\":\"poiabc\"\r\n}"
+					"raw": "{\r\n    \"name\": \"poi 4\",\r\n    \"visiting_order\":\"4\",\r\n    \"plan_id\":21,\r\n    \"venue_id\":\"poiabc\"\r\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/poi/",
+					"raw": "http://localhost:8080/TravelPlanner/poi",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -35,8 +35,7 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"poi",
-						""
+						"poi"
 					]
 				}
 			},
@@ -61,10 +60,10 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"poi 1\",\n    \"id\": 4,\n    \"visiting_order\": 4,\n    \"plan_id\": 1,\n    \"venue_id\": \"abcxyz\"\n}"
+					"raw": "{\n    \"name\": \"poi 1\",\n    \"id\": 6,\n    \"visiting_order\": 3,\n    \"plan_id\": 1,\n    \"venue_id\": \"abcxyz1111\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/poi/",
+					"raw": "http://localhost:8080/TravelPlanner/poi",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -72,8 +71,7 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"poi",
-						""
+						"poi"
 					]
 				}
 			},
@@ -95,7 +93,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/poi/?id=4",
+					"raw": "http://localhost:8080/TravelPlanner/poi?id=6",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -103,13 +101,12 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"poi",
-						""
+						"poi"
 					],
 					"query": [
 						{
 							"key": "id",
-							"value": "4"
+							"value": "6"
 						}
 					]
 				}
@@ -141,7 +138,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/poi/?plan_id=1",
+					"raw": "http://localhost:8080/TravelPlanner/poi?plan_id=21",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -149,13 +146,12 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"poi",
-						""
+						"poi"
 					],
 					"query": [
 						{
 							"key": "plan_id",
-							"value": "1"
+							"value": "21"
 						}
 					]
 				}
