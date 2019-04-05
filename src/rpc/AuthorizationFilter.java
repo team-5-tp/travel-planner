@@ -16,12 +16,13 @@ public class AuthorizationFilter implements javax.servlet.Filter {
 		try {
 			if (JwtToken.verifyToken(httpRequest)) {
 				filterChain.doFilter(request, response);
+			} else {
+				httpResponse.setStatus(401);
 			}
 		} catch (Exception e) {
-
+			// TODO Auto-generated catch block
 			e.printStackTrace();
+			httpResponse.setStatus(401);
 		}
-		httpResponse.setStatus(401);
 	}
-
 }

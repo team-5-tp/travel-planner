@@ -18,7 +18,7 @@ import db.PoIDBConnectionFactory;
 /**
  * Servlet implementation class PoI
  */
-@WebServlet("/poi/")
+@WebServlet("/poi")
 public class PoI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

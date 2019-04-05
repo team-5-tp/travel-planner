@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import db.PlanDBConnection;
 import db.PlanDBConnectionFactory;
 
-@WebServlet("/plan/")
+@WebServlet("/plan")
 public class Plan extends HttpServlet {
     private static final long serialVersionUID = 1L;
 

@@ -8,6 +8,9 @@
 	<filter-mapping>
     	<filter-name>authFilter</filter-name>
     	<url-pattern>/plan/*</url-pattern>
+  	</filter-mapping>
+  	<filter-mapping>
+    	<filter-name>authFilter</filter-name>
     	<url-pattern>/poi/*</url-pattern>
   	</filter-mapping>
 </web-app>
