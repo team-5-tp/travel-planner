@@ -3,8 +3,6 @@ package entity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import rpc.JwtToken;
-
 /**
  * Representation of each generated travel plan
  */

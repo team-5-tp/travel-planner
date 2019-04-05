@@ -1,7 +1,5 @@
 package db;
 
-import db.mysql.MySQLConnection;
-
 public class UserDBConnectionFactory {
 	// This should change based on the pipeline.
 	private static final String DEFAULT_DB = "mysql";

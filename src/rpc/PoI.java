@@ -1,7 +1,6 @@
 package rpc;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -106,7 +105,6 @@ public class PoI extends HttpServlet {
 	protected void doDelete(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PoIDBConnection connection = PoIDBConnectionFactory.getConnection();
-		JSONObject obj = new JSONObject();
 		try {
 			int id = Integer.parseInt(request.getParameter("id"));
 			if (connection.deletePoint(id)) {
