@@ -62,7 +62,6 @@ public class Plan extends HttpServlet {
         List<entity.Plan> allPlans = connection.getAllPlans(userId);
         if (allPlans == null) {
             response.setStatus(500);
-            throw new Exception("No such plans");
         }
         for (entity.Plan plan : allPlans) {
             array.put(plan.toJSONObject());
