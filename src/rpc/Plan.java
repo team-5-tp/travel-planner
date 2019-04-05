@@ -60,9 +60,6 @@ public class Plan extends HttpServlet {
         JSONArray array = new JSONArray();
         // Convert all saved plans into JSON object and put them all into the JSON array
         List<entity.Plan> allPlans = connection.getAllPlans(userId);
-        if (allPlans == null) {
-            response.setStatus(500);
-        }
         for (entity.Plan plan : allPlans) {
             array.put(plan.toJSONObject());
         }
