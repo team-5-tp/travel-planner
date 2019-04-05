@@ -1,0 +1,71 @@
+{
+	"info": {
+		"_postman_id": "d296e9e1-c13b-48af-a810-6091c4251133",
+		"name": "user",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"1111\",\n\t\"password\": \"2222\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/TravelPlanner/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"TravelPlanner",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"aaaa\",\n\t\"password\": \"aaaa\"\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/TravelPlanner/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"TravelPlanner",
+						"register"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
