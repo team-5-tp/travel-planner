@@ -22,7 +22,7 @@
 					"raw": "{\n\t\"username\": \"1111\",\n\t\"password\": \"2222\"\n}"
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/register",
+					"raw": "http://localhost:8080/TravelPlanner/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -30,7 +30,7 @@
 					"port": "8080",
 					"path": [
 						"TravelPlanner",
-						"register"
+						"login"
 					]
 				}
 			},

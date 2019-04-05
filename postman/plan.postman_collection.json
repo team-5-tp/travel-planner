@@ -58,7 +58,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/plan/?id=17",
+					"raw": "http://localhost:8080/TravelPlanner/plan/?id=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -72,7 +72,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "17"
+							"value": "1"
 						}
 					]
 				}

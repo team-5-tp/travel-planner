@@ -43,7 +43,7 @@
 			"response": []
 		},
 		{
-			"name": "update",
+			"name": "update poi",
 			"request": {
 				"method": "PUT",
 				"header": [
