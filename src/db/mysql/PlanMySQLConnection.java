@@ -76,7 +76,7 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
 		}
 
 		try {
-			String sql = "SELECT * FROM plan WHERE user_id = ?";
+			String sql = "SELECT * FROM plan WHERE user_id = ? order by id desc";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, userId);
 

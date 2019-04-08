@@ -98,7 +98,7 @@ public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnecti
 		}
 		List<PoI> results = new ArrayList<>();
 		try {
-			String sql = "SELECT * from poi WHERE plan_id = ? ";
+			String sql = "SELECT * from poi WHERE plan_id = ? order by visiting_order";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, planId);
 			ResultSet rs = statement.executeQuery();
