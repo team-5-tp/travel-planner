@@ -24,7 +24,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"city\": \"Hong Kong\",\r\n    \"name\": \"Best Trip to Hong Kong\"\r\n}"
+					"raw": "{\r\n    \"city\": \"Hong Kong\",\r\n    \"name\": \"Best Trip to Hong Kong2\"\r\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/TravelPlanner/plan",
