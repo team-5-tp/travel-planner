@@ -4,7 +4,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
+import db.PlanDBConnection;
+import db.PlanDBConnectionFactory;
+import db.PoIDBConnectionFactory;
+import entity.Plan;
 import entity.User;
 
 public class UserMySQLConnection extends MySQLConnection implements db.UserDBConnection{
@@ -42,19 +47,25 @@ public class UserMySQLConnection extends MySQLConnection implements db.UserDBCon
 	}
 
 	@Override
-	public void delete(int id) {
+	public boolean delete(int id) {
 		if (this.conn == null) {
 			System.err.println("DB connection failed");
-			return;
+			return false;
 		}
 		try {
+			PlanDBConnection planConnection=PlanDBConnectionFactory.getConnection();
+			List<Plan> plans=planConnection.getAllPlans(id);
+			for (Plan plan : plans) {
+				planConnection.deletePlan(plan.getId());
+			}
 			String sql = "DELETE FROM user WHERE id = ?";
 			PreparedStatement ps = this.conn.prepareStatement(sql);
 			ps.setInt(1, id);
-			ps.execute();
+			return  ps.executeUpdate()==1 ;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 
 	@Override
@@ -64,7 +75,7 @@ public class UserMySQLConnection extends MySQLConnection implements db.UserDBCon
 			return false;
 		}
 		try {
-			String sql = "UPDATA user SET username = ?, password = ? WHERE id = ?)";
+			String sql = "UPDATE user SET username = ?, password = ? WHERE id = ?";
 			PreparedStatement ps = this.conn.prepareStatement(sql);
 			ps.setString(1, user.getUsername());
 			ps.setString(2, user.getPassword());

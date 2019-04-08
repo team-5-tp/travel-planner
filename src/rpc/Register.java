@@ -8,9 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+
+import com.sun.xml.internal.stream.Entity;
+
 import db.UserDBConnectionFactory;
+import db.PlanDBConnection;
+import db.PlanDBConnectionFactory;
 import db.UserDBConnection;
-import entity.User;
 
 /**
  * Servlet implementation class Register
@@ -34,7 +38,7 @@ public class Register extends HttpServlet {
 		UserDBConnection connection = UserDBConnectionFactory.getConnection();
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
-			User user=User.fromJSONObject(input);
+			entity.User user=entity.User.fromJSONObject(input);
 			response.setContentType("appliaction/json;charset=UTF-8");
 			response.setHeader("Access-Control-Allow-Origin", "*");
 			if (connection.create(user)) {                                                                        
@@ -49,4 +53,5 @@ public class Register extends HttpServlet {
 		}
 	}
 
+    
 }
