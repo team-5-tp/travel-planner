@@ -8,7 +8,6 @@ import java.util.List;
 
 import db.PlanDBConnection;
 import db.PlanDBConnectionFactory;
-import db.PoIDBConnectionFactory;
 import entity.Plan;
 import entity.User;
 
