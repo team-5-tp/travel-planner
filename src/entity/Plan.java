@@ -1,7 +1,11 @@
 package entity;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import rpc.JwtToken;
 
 /**
  * Representation of each generated travel plan
@@ -60,6 +64,15 @@ public class Plan {
 		return obj;
 	}
 
+	public boolean verify(HttpServletRequest request) {
+		try {
+			int userId = JwtToken.getUserId(request);
+			return this.userId == userId;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
 	public static Plan fromJSONObject(JSONObject obj) {
 		Plan plan = new Plan();
 		try {
@@ -73,12 +86,12 @@ public class Plan {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		try {
-			plan.userId = obj.getInt("user_id");
-		} catch (JSONException e) {
-			plan.userId = null;
-			e.printStackTrace();
-		}
+//		try {
+//			plan.userId = obj.getInt("user_id");
+//		} catch (JSONException e) {
+//			plan.userId = null;
+//			e.printStackTrace();
+//		}
 		return plan;
 	}
 }
