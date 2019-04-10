@@ -60,7 +60,7 @@ public class MySQLTableCreation {
 
             // Step 4: insert fake user 1111/3229c1097c00d497a0fd282d586be050
             // 1. user
-            sql = "INSERT IGNORE INTO user (username, password) VALUES('1111', '2222')";
+            sql = "INSERT IGNORE INTO user (username, password) VALUES('1111', '1111')";
             statement.executeUpdate(sql);
             
             // 2. plan

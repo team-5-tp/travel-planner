@@ -19,14 +19,14 @@ import db.UserDBConnection;
 /**
  * Servlet implementation class Register
  */
-@WebServlet("/register")
-public class Register extends HttpServlet {
+@WebServlet("/signup")
+public class Signup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Register() {
+    public Signup() {
         super();
         // TODO Auto-generated constructor stub
     }
