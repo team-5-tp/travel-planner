@@ -64,10 +64,10 @@ public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnecti
 			return false;
 		}
 		try {
-			String sql = "DELETE * FROM poi WHERE plan_id = ? ";
+			String sql = "DELETE FROM poi WHERE plan_id = ? ";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, planId);
-			return statement.executeUpdate() > 0;
+			return statement.executeUpdate() >= 0;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
