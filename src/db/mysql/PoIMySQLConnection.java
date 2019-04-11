@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import db.PoIDBConnection;
-import entity.Plan;
 import entity.PoI;
 
 public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnection {
