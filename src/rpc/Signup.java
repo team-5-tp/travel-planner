@@ -8,21 +8,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
+
 import db.UserDBConnectionFactory;
 import db.UserDBConnection;
-import entity.User;
 
 /**
  * Servlet implementation class Register
  */
-@WebServlet("/register")
-public class Register extends HttpServlet {
+@WebServlet("/signup")
+public class Signup extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Register() {
+    public Signup() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +34,9 @@ public class Register extends HttpServlet {
 		UserDBConnection connection = UserDBConnectionFactory.getConnection();
 		try {
 			JSONObject input = RpcHelper.readJSONObject(request);
-			User user=User.fromJSONObject(input);
+			entity.User user=entity.User.fromJSONObject(input);
+			response.setContentType("appliaction/json;charset=UTF-8");
+			response.setHeader("Access-Control-Allow-Origin", "*");
 			if (connection.create(user)) {                                                                        
 				response.setStatus(200);
 			} else {
@@ -47,4 +49,5 @@ public class Register extends HttpServlet {
 		}
 	}
 
+    
 }

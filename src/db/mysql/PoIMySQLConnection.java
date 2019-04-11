@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ArrayList;
 
 import db.PoIDBConnection;
+import entity.Plan;
 import entity.PoI;
 
 public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnection {
@@ -98,7 +99,7 @@ public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnecti
 		}
 		List<PoI> results = new ArrayList<>();
 		try {
-			String sql = "SELECT * from poi WHERE plan_id = ? ";
+			String sql = "SELECT * from poi WHERE plan_id = ? order by visiting_order";
 			PreparedStatement statement = conn.prepareStatement(sql);
 			statement.setInt(1, planId);
 			ResultSet rs = statement.executeQuery();
@@ -115,6 +116,34 @@ public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnecti
 			e.printStackTrace();
 		}
 		return results;
+	}
+
+	@Override
+	public PoI getPoI(int id) {
+		PoI poi = null;
+		if (conn == null) {
+			System.err.println("DB connection failed");
+			return poi;
+		}
+
+		try {
+			String sql = "SELECT * FROM poi WHERE id = ?";
+			PreparedStatement statement = conn.prepareStatement(sql);
+			statement.setInt(1, id);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				poi = new PoI();
+				poi.setId(resultSet.getInt("id"));
+				poi.setName(resultSet.getString("name"));
+				poi.setVisitingOrder(resultSet.getInt("visiting_order"));
+				poi.setPlanId(resultSet.getInt("plan_id"));
+				poi.setVenueId(resultSet.getString("venue_id"));
+			}
+			return poi;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

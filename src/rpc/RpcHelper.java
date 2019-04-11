@@ -13,7 +13,6 @@ public class RpcHelper {
 	// Writes a text to http response.
 	public static void writeText(HttpServletResponse response, String text) throws IOException {
 		response.setContentType("text/plain;charset=UTF-8");
-		response.setHeader("Access-Control-Allow-Origin", "*");
 		PrintWriter out = response.getWriter();
 		out.print(text);
 		out.close();
@@ -22,8 +21,6 @@ public class RpcHelper {
 	// Writes a JSONArray to http response.
 	public static void writeJSONArray(HttpServletResponse response, JSONArray array) throws IOException {
 		response.setContentType("appliaction/json;charset=UTF-8");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 		PrintWriter out = response.getWriter();
 		out.print(array);
 		out.close();
@@ -32,8 +29,6 @@ public class RpcHelper {
 	// Writes a JSONObject to http response.
 	public static void writeJSONObject(HttpServletResponse response, JSONObject obj) throws IOException {
 		response.setContentType("appliaction/json;charset=UTF-8");
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Headers", "Content-Type,Authorization");
 		PrintWriter out = response.getWriter();
 		out.print(obj);
 		out.close();
