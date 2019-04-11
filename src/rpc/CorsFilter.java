@@ -41,10 +41,9 @@ public class CorsFilter implements Filter {
         System.out.println("CORSFilter HTTP Request: " + request.getMethod());
  
         // Authorize (allow) all domains to consume the content
-        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-        //response.addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST");
- 
+        response.addHeader("Access-Control-Allow-Methods","GET, OPTIONS, HEAD, PUT, POST, DELETE");
         // For HTTP OPTIONS verb/method reply with ACCEPTED status code -- per CORS handshake
         if (request.getMethod().equals("OPTIONS")) {
         	response.setStatus(HttpServletResponse.SC_ACCEPTED);
