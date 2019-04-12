@@ -21,12 +21,12 @@ public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnecti
 
 		try {
 			// help execute sql in database
-			String sql = "INSERT INTO poi (name,visiting_order,plan_id,venue_id) VALUES (?, ?, ?, ?)";
+			String sql = "INSERT INTO poi (name,visiting_order,plan_id) VALUES (?, ?, ?)";
 			PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, poi.getName());
 			ps.setInt(2, poi.getVisitingOrder());
 			ps.setInt(3, poi.getPlanId());
-			ps.setString(4, poi.getVenueId());
+//			ps.setString(4, poi.getVenueId());
 			int result = ps.executeUpdate();
 			ResultSet resultSet = ps.getGeneratedKeys();
 			if (resultSet.next()) {
@@ -108,7 +108,7 @@ public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnecti
 				poI.setName(rs.getString("name"));
 				poI.setVisitingOrder(rs.getInt("visiting_order"));
 				poI.setPlanId(rs.getInt("plan_id"));
-				poI.setVenueId(rs.getString("venue_id"));
+//				poI.setVenueId(rs.getString("venue_id"));
 				results.add(poI);
 			}
 		} catch (SQLException e) {
@@ -136,7 +136,7 @@ public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnecti
 				poi.setName(resultSet.getString("name"));
 				poi.setVisitingOrder(resultSet.getInt("visiting_order"));
 				poi.setPlanId(resultSet.getInt("plan_id"));
-				poi.setVenueId(resultSet.getString("venue_id"));
+//				poi.setVenueId(resultSet.getString("venue_id"));
 			}
 			return poi;
 		} catch (Exception e) {
@@ -144,5 +144,4 @@ public class PoIMySQLConnection extends MySQLConnection implements PoIDBConnecti
 		}
 		return null;
 	}
-
 }

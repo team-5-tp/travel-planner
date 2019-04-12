@@ -8,7 +8,7 @@ public class PoI {
 	private String name;
 	private int visitingOrder;
 	private int planId;
-	private String venueId;
+//	private String venueId;
 
 	public Integer getId() {
 		return id;
@@ -34,13 +34,13 @@ public class PoI {
 		this.planId = planId;
 	}
 
-	public String getVenueId() {
-		return venueId;
-	}
+//	public String getVenueId() {
+//		return venueId;
+//	}
 
-	public void setVenueId(String venueId) {
-		this.venueId = venueId;
-	}
+//	public void setVenueId(String venueId) {
+//		this.venueId = venueId;
+//	}
 
 	public int getVisitingOrder() {
 		return visitingOrder;
@@ -49,7 +49,7 @@ public class PoI {
 	public void setVisitingOrder(int visitingOrder) {
 		this.visitingOrder = visitingOrder;
 	}
-
+	
 	public JSONObject toJSONObject() {
 		JSONObject obj = new JSONObject();
 		try {
@@ -57,7 +57,7 @@ public class PoI {
 			obj.put("name", name);
 			obj.put("visiting_order", visitingOrder);
 			obj.put("plan_id", planId);
-			obj.put("venue_id", venueId);
+//			obj.put("venue_id", venueId);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -75,7 +75,7 @@ public class PoI {
 			poi.name = obj.getString("name");
 			poi.visitingOrder = obj.getInt("visiting_order");
 			poi.planId = obj.getInt("plan_id");
-			poi.venueId=obj.getString("venue_id");
+//			poi.venueId=obj.getString("venue_id");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

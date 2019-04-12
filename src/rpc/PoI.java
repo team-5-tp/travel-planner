@@ -131,8 +131,10 @@ public class PoI extends HttpServlet {
 		PoIDBConnection poIDBConnection = PoIDBConnectionFactory.getConnection();
 		PlanDBConnection planDBConnection = PlanDBConnectionFactory.getConnection();
 		try {
-			JSONObject obj = RpcHelper.readJSONObject(request);
-			int planId = obj.getInt("plan_id");
+//			JSONObject obj = RpcHelper.readJSONObject(request);
+//			int planId = obj.getInt("plan_id");
+			int planId = Integer.parseInt(request.getParameter("plan_id"));
+//			System.out.println("GET POIs: " + planId);
 			entity.Plan plan = planDBConnection.getPlan(planId);
 			if (plan.verify(request)) {
 				List<entity.PoI> poiList = poIDBConnection.getPoints(planId);
