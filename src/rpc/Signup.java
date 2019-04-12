@@ -36,11 +36,12 @@ public class Signup extends HttpServlet {
 			JSONObject input = RpcHelper.readJSONObject(request);
 			entity.User user=entity.User.fromJSONObject(input);
 			if (connection.create(user)) {                                                                        
-				response.setStatus(200);
+				response.setStatus(201);
 			} else {
 				response.setStatus(409);
 			}
 		} catch (Exception e) {
+			response.setStatus(500);
 			e.printStackTrace();
 		} finally {
 			connection.close();

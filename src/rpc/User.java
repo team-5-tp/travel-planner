@@ -45,6 +45,7 @@ public class User extends HttpServlet {
                 response.setStatus(404);
             }
         } catch (Exception e) {
+			response.setStatus(500);
             e.printStackTrace();
         } finally {
             connection.close();
@@ -62,11 +63,12 @@ public class User extends HttpServlet {
         try {
             int id =Integer.parseInt(request.getParameter("id"));
             if (connection.delete(id)) {
-                response.setStatus(200);
+                response.setStatus(204);
             } else {
-                response.setStatus(500);
+                response.setStatus(404);
             }
         } catch (Exception e) {
+			response.setStatus(500);
             e.printStackTrace();
         } finally {
             connection.close();

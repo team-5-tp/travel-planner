@@ -46,6 +46,7 @@ public class Login extends HttpServlet {
 				response.setStatus(404);
 			}
 		} catch (Exception e) {
+			response.setStatus(500);
 			e.printStackTrace();
 		} finally {
 			connection.close();
