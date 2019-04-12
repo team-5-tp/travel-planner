@@ -1,6 +1,7 @@
 package rpc;
 
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -66,10 +67,14 @@ public class PoI extends HttpServlet {
 		PoIDBConnection poIDBConnection = PoIDBConnectionFactory.getConnection();
 		PlanDBConnection planDBConnection = PlanDBConnectionFactory.getConnection();
 		try {
-			int id = Integer.parseInt(request.getParameter("id"));
-			entity.PoI poi = poIDBConnection.getPoI(id);
-			entity.Plan plan = planDBConnection.getPlan(poi.getPlanId());
-			if (plan.verify(request) && poIDBConnection.deletePoint(id)) {
+//			int id = Integer.parseInt(request.getParameter("id"));
+//			int planId = Integer.parseInt(request.getParameter("plan_id"));
+			JSONObject obj = RpcHelper.readJSONObject(request);
+			int planId = obj.getInt("plan_id");
+			System.out.println("planId = " + planId);
+//			entity.PoI poi = poIDBConnection.getPoI(id);
+			entity.Plan plan = planDBConnection.getPlan(planId);
+			if (plan.verify(request) && poIDBConnection.deletePoints(planId)) {
 				response.setStatus(200);
 			} else {
 				response.setStatus(500);
