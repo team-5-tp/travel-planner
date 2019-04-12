@@ -39,7 +39,6 @@ public class User extends HttpServlet {
         try {
             JSONObject obj = RpcHelper.readJSONObject(request);
             entity.User user=entity.User.fromJSONObject(obj);
-            // Update the plan with the new given name
             if (connection.update(user)) {
                 response.setStatus(200);
             } else {
