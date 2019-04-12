@@ -60,7 +60,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"name\": \"poi 1\",\n    \"id\": 6,\n    \"visiting_order\": 3,\n    \"plan_id\": 1,\n    \"venue_id\": \"abcxyz1111\"\n}"
+					"raw": "{\n    \"name\": \"poi 1\",\n    \"id\": 5,\n    \"visiting_order\": 3,\n    \"plan_id\": 1,\n    \"venue_id\": \"abcxyz1111\"\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8080/TravelPlanner/poi",
@@ -93,7 +93,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/poi?id=6",
+					"raw": "http://localhost:8080/TravelPlanner/poi?id=5",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -106,7 +106,7 @@
 					"query": [
 						{
 							"key": "id",
-							"value": "6"
+							"value": "5"
 						}
 					]
 				}
@@ -138,7 +138,7 @@
 					"raw": ""
 				},
 				"url": {
-					"raw": "http://localhost:8080/TravelPlanner/poi?plan_id=21",
+					"raw": "http://localhost:8080/TravelPlanner/poi?plan_id=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -151,7 +151,43 @@
 					"query": [
 						{
 							"key": "plan_id",
-							"value": "21"
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete pois",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxfQ.SRwb_n4Ki2eLwUrdvSfNlCqpQdRlpa0gGYpqiDp-myU"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/TravelPlanner/poi?id=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"TravelPlanner",
+						"poi"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "5"
 						}
 					]
 				}
