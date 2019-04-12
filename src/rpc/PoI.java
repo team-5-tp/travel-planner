@@ -47,11 +47,12 @@ public class PoI extends HttpServlet {
 			entity.Plan plan = planDBConnection.getPlan(poi.getPlanId());
 			if (plan.verify(request) && poIDBConnection.addPoint(poi)) {
 				RpcHelper.writeJSONObject(response, poi.toJSONObject());
-				response.setStatus(200);
+				response.setStatus(201);
 			} else {
-				response.setStatus(500);
+				response.setStatus(404);
 			}
 		} catch (Exception e) {
+			response.setStatus(500);
 			e.printStackTrace();
 		} finally {
 			poIDBConnection.close();
@@ -67,19 +68,28 @@ public class PoI extends HttpServlet {
 		PoIDBConnection poIDBConnection = PoIDBConnectionFactory.getConnection();
 		PlanDBConnection planDBConnection = PlanDBConnectionFactory.getConnection();
 		try {
-//			int id = Integer.parseInt(request.getParameter("id"));
-//			int planId = Integer.parseInt(request.getParameter("plan_id"));
-			JSONObject obj = RpcHelper.readJSONObject(request);
-			int planId = obj.getInt("plan_id");
-			System.out.println("planId = " + planId);
-//			entity.PoI poi = poIDBConnection.getPoI(id);
-			entity.Plan plan = planDBConnection.getPlan(planId);
-			if (plan.verify(request) && poIDBConnection.deletePoints(planId)) {
-				response.setStatus(200);
+
+			if (request.getParameter("id") != null) {
+				int id = Integer.parseInt(request.getParameter("id"));
+				entity.PoI poi = poIDBConnection.getPoI(id);
+				entity.Plan plan = planDBConnection.getPlan(poi.getPlanId());
+				if (plan.verify(request) && poIDBConnection.deletePoint(id)) {
+					response.setStatus(200);
+				} else {
+					response.setStatus(404);
+				}
 			} else {
-				response.setStatus(500);
+				JSONObject obj = RpcHelper.readJSONObject(request);
+				int planId = obj.getInt("plan_id");
+				entity.Plan plan = planDBConnection.getPlan(planId);
+				if (plan!=null && plan.verify(request) && poIDBConnection.deletePoints(planId)) {
+					response.setStatus(204);
+				} else {
+					response.setStatus(404);
+				}
 			}
 		} catch (Exception e) {
+			response.setStatus(500);
 			e.printStackTrace();
 		} finally {
 			poIDBConnection.close();
@@ -101,9 +111,10 @@ public class PoI extends HttpServlet {
 			if (plan.verify(request) && poIDBConnection.updatePoint(poi)) {
 				response.setStatus(200);
 			} else {
-				response.setStatus(500);
+				response.setStatus(404);
 			}
 		} catch (Exception e) {
+			response.setStatus(500);
 			e.printStackTrace();
 		} finally {
 			poIDBConnection.close();
@@ -132,7 +143,7 @@ public class PoI extends HttpServlet {
 				RpcHelper.writeJSONArray(response, result);
 				response.setStatus(200);
 			} else {
-				response.setStatus(500);
+				response.setStatus(404);
 			}
 		} catch (Exception e) {
 			response.setStatus(500);

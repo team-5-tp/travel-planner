@@ -40,15 +40,13 @@ public class Login extends HttpServlet {
 			User user = connection.getByUsernamePassword(username, password);
 			if (user != null) {
 				String token=JwtToken.createToken(user);
-				System.out.println(user.getUsername());
-				System.out.println("doPost:" + token);
 				RpcHelper.writeText(response, token);
 				response.setStatus(200);
 			} else {
-				System.out.println("In else 401");
-				response.setStatus(401);
+				response.setStatus(404);
 			}
 		} catch (Exception e) {
+			response.setStatus(500);
 			e.printStackTrace();
 		} finally {
 			connection.close();

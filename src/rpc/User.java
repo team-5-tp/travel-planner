@@ -39,13 +39,13 @@ public class User extends HttpServlet {
         try {
             JSONObject obj = RpcHelper.readJSONObject(request);
             entity.User user=entity.User.fromJSONObject(obj);
-            // Update the plan with the new given name
             if (connection.update(user)) {
                 response.setStatus(200);
             } else {
-                response.setStatus(500);
+                response.setStatus(404);
             }
         } catch (Exception e) {
+			response.setStatus(500);
             e.printStackTrace();
         } finally {
             connection.close();
@@ -63,11 +63,12 @@ public class User extends HttpServlet {
         try {
             int id =Integer.parseInt(request.getParameter("id"));
             if (connection.delete(id)) {
-                response.setStatus(200);
+                response.setStatus(204);
             } else {
-                response.setStatus(500);
+                response.setStatus(404);
             }
         } catch (Exception e) {
+			response.setStatus(500);
             e.printStackTrace();
         } finally {
             connection.close();
