@@ -21,9 +21,8 @@ public class AuthFilter implements javax.servlet.Filter {
 				httpResponse.setStatus(401);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			httpResponse.setStatus(401);
+			httpResponse.setStatus(500);
 		}
 	}
 }
