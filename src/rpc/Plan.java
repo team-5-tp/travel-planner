@@ -99,7 +99,7 @@ public class Plan extends HttpServlet {
                 RpcHelper.writeJSONObject(response, plan.toJSONObject());
                 response.setStatus(200);
             } else {
-                response.setStatus(500);
+                response.setStatus(404);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,7 +123,7 @@ public class Plan extends HttpServlet {
             if (dbPlan.verify(request) && connection.deletePlan(id)) {
                 response.setStatus(200);
             } else {
-                response.setStatus(500);
+                response.setStatus(404);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -148,7 +148,7 @@ public class Plan extends HttpServlet {
             if (dbPlan.verify(request) && connection.updatePlan(plan)) {
                 response.setStatus(200);
             } else {
-                response.setStatus(500);
+                response.setStatus(404);
             }
         } catch (Exception e) {
             e.printStackTrace();

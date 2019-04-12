@@ -43,7 +43,7 @@ public class User extends HttpServlet {
             if (connection.update(user)) {
                 response.setStatus(200);
             } else {
-                response.setStatus(500);
+                response.setStatus(404);
             }
         } catch (Exception e) {
             e.printStackTrace();

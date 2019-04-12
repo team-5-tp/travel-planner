@@ -43,7 +43,7 @@ public class Login extends HttpServlet {
 				RpcHelper.writeText(response, token);
 				response.setStatus(200);
 			} else {
-				response.setStatus(401);
+				response.setStatus(404);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
