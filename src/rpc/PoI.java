@@ -68,7 +68,7 @@ public class PoI extends HttpServlet {
 		PoIDBConnection poIDBConnection = PoIDBConnectionFactory.getConnection();
 		PlanDBConnection planDBConnection = PlanDBConnectionFactory.getConnection();
 		try {
-
+			// We will never enter this condition
 			if (request.getParameter("id") != null) {
 				int id = Integer.parseInt(request.getParameter("id"));
 				entity.PoI poi = poIDBConnection.getPoI(id);
@@ -83,7 +83,7 @@ public class PoI extends HttpServlet {
 				int planId = obj.getInt("plan_id");
 				entity.Plan plan = planDBConnection.getPlan(planId);
 				if (plan!=null && plan.verify(request) && poIDBConnection.deletePoints(planId)) {
-					response.setStatus(204);
+					response.setStatus(200);
 				} else {
 					response.setStatus(404);
 				}
@@ -131,8 +131,8 @@ public class PoI extends HttpServlet {
 		PoIDBConnection poIDBConnection = PoIDBConnectionFactory.getConnection();
 		PlanDBConnection planDBConnection = PlanDBConnectionFactory.getConnection();
 		try {
-
-			int planId = Integer.parseInt(request.getParameter("plan_id"));
+			JSONObject obj = RpcHelper.readJSONObject(request);
+			int planId = obj.getInt("plan_id");
 			entity.Plan plan = planDBConnection.getPlan(planId);
 			if (plan.verify(request)) {
 				List<entity.PoI> poiList = poIDBConnection.getPoints(planId);

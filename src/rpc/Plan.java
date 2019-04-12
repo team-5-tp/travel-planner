@@ -123,7 +123,7 @@ public class Plan extends HttpServlet {
             int id =Integer.parseInt(request.getParameter("id"));
             entity.Plan plan=connection.getPlan(id);
             if (plan!=null && plan.verify(request) && connection.deletePlan(id)) {
-                response.setStatus(204);
+                response.setStatus(200);
             } else {
                 response.setStatus(404);
             }
@@ -146,9 +146,10 @@ public class Plan extends HttpServlet {
 
         try {
             JSONObject obj = RpcHelper.readJSONObject(request);
-            entity.Plan plan=entity.Plan.fromJSONObject(obj);
-            entity.Plan dbPlan=connection.getPlan(plan.getId());
+            entity.Plan plan = entity.Plan.fromJSONObject(obj);
+            entity.Plan dbPlan = connection.getPlan(plan.getId());
             if (dbPlan.verify(request) && connection.updatePlan(plan)) {
+                RpcHelper.writeJSONObject(response, plan.toJSONObject());
                 response.setStatus(200);
             } else {
                 response.setStatus(404);
