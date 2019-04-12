@@ -121,8 +121,8 @@ public class Plan extends HttpServlet {
         // Send a request to delete a plan
         try {
             int id =Integer.parseInt(request.getParameter("id"));
-            entity.Plan dbPlan=connection.getPlan(id);
-            if (dbPlan.verify(request) && connection.deletePlan(id)) {
+            entity.Plan plan=connection.getPlan(id);
+            if (plan!=null && plan.verify(request) && connection.deletePlan(id)) {
                 response.setStatus(204);
             } else {
                 response.setStatus(404);

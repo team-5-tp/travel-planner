@@ -110,9 +110,9 @@ public class PlanMySQLConnection extends MySQLConnection implements PlanDBConnec
 			String sql2 = "DELETE FROM plan WHERE id = ?";
 			PreparedStatement stat2 = conn.prepareStatement(sql2);
 			stat2.setInt(1, id);
-			stat2.executeUpdate();
+			int result =stat2.executeUpdate();
 			conn.commit();
-			return true;
+			return result>0;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			try {

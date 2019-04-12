@@ -82,7 +82,7 @@ public class PoI extends HttpServlet {
 				JSONObject obj = RpcHelper.readJSONObject(request);
 				int planId = obj.getInt("plan_id");
 				entity.Plan plan = planDBConnection.getPlan(planId);
-				if (plan.verify(request) && poIDBConnection.deletePoints(planId)) {
+				if (plan!=null && plan.verify(request) && poIDBConnection.deletePoints(planId)) {
 					response.setStatus(204);
 				} else {
 					response.setStatus(404);
