@@ -70,11 +70,11 @@ public class MySQLTableCreation {
             
             // 3. poi
             // Insert two fake points: universal studio, getty
-            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) VALUES ('Morning Trail, The Peak (…ΩÌî≥øﬂ\èΩ)', 1, 1, '4b107f95f964a520c17123e3')";
+            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) VALUES ('Morning Trail, The Peak', 1, 1, '4b107f95f964a520c17123e3')";
             statement.executeUpdate(sql);
-            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) VALUES ('Four Seasons Hotel Hong Kong (œ„∏€Àƒºææ∆µÍ)', 2, 1, '4bb697b3ef159c74493d76f7')";
+            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) VALUES ('Four Seasons Hotel Hong Kong', 2, 1, '4bb697b3ef159c74493d76f7')";
             statement.executeUpdate(sql);
-            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) VALUES ('Dragon''s Back (˝àºπ)', 3, 1, '4b0588ccf964a52080da22e3')";
+            sql = "INSERT IGNORE INTO poi (name, visiting_order, plan_id, venue_id) VALUES ('Dragon''s Back', 3, 1, '4b0588ccf964a52080da22e3')";
             statement.executeUpdate(sql);
             conn.close();
             System.out.println("Successfully created tables");

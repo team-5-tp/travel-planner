@@ -30,10 +30,12 @@ public class JwtToken {
 
 	public static boolean verifyToken(HttpServletRequest request)  throws Exception {
 		String token = request.getHeader(AUTHORIZATION);
+		System.out.println(token);
 		if (token == null || !token.startsWith(BEARER)) {
 			return false;
 		}
 		token = token.replace(BEARER, "");
+		System.out.println(token);
 		JWTVerifier verifier = JWT.require(Algorithm.HMAC256(KEY)).build();
 		verifier.verify(token);
 		return true;
